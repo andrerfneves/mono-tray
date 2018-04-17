@@ -107,12 +107,10 @@ function createWindow() {
   // Init & Positioning Methods
   // --------------------------
   tray.setToolTip('Crypto Bar');
-  mainWindow.loadURL('file://' + __dirname + '/index.html');
+  mainWindow.loadURL(`file://${__dirname}/app/index.html`);
   let positioner = new Positioner(mainWindow);
   let bounds = tray.getBounds();
   positioner.move('trayCenter', bounds);
-
-  console.log('hey hey');
 
   // ---------------------
   // Load User Preferences

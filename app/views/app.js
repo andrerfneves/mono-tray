@@ -7,10 +7,11 @@ import formatCurrency from 'format-currency';
 import { Scrollbars } from 'react-custom-scrollbars';
 
 const { Menu, MenuItem } = remote;
-const main = remote.require('../../electron.js');
+const main = remote.require('./electron');
 const Config = require('../../config.json');
 const Socket = require('../../pricing_service');
-const iconColor = { color:'#675BC0' };
+
+const iconColor = { color: '#675BC0' };
 const menu = new Menu();
 let prices;
 
@@ -24,8 +25,7 @@ export default class App extends Component {
     page: 'home',
     subpage: 'main',
     currentSettings: {},
-    selectedBox: main.store.get('preferences').currencies.filter(x => x.default)
-      .map(x => x.from + x.to + x.exchange)[0],
+    selectedBox: main.store.get('preferences').currencies.filter(x => x.default).map(x => x.from + x.to + x.exchange)[0],
     internetOffline: false,
     pairDropdownFrom: null,
     pairDropdownTo: null,
@@ -33,9 +33,10 @@ export default class App extends Component {
   }
 
   handleBox = (from, to, price, exchange, prefix) => {
-    let newSettings = main.store.get('preferences')
-    newSettings['currencies'] = newSettings['currencies'].map(x=>{
-      if(x.from === from && x.to === to && x.exchange === exchange){
+    let newSettings = main.store.get('preferences');
+
+    newSettings['currencies'] = newSettings['currencies'].map((x) => {
+      if (x.from === from && x.to === to && x.exchange === exchange) {
         return {
           "exchange": x.exchange,
           "from": x.from,
@@ -49,59 +50,79 @@ export default class App extends Component {
           "default": false
           }
         }
-    })
-    main.store.set('preferences', newSettings)
+    });
+
+    main.store.set('preferences', newSettings);
     main.tray.setImage(main.getImage(from));
-    main.tray.setTitle(`${prefix}${formatCurrency(price, {minFraction:2, maxFraction: 8})}`)
-    this.setState({currentSettings:newSettings,subpage:'main'})
-    this.setState({selectedBox:from+to+exchange})
+    main.tray.setTitle(`${prefix}${formatCurrency(price, {minFraction:2, maxFraction: 8})}`);
+
+    this.setState({
+      currentSettings: newSettings,
+      subpage:'main',
+      selectedBox: `${from}${to}${exchange}`
+    });
   }
 
-  handleOpen = (url) =>main.open(url);
+  handleOpen = (url) => main.open(url);
 
   handlePairDropdownFrom = (e) => this.setState({ pairDropdownFrom: e });
   handlePairDropdownTo = (e) => this.setState({ pairDropdownTo: e });
   handlePairDropdownExchange = (e) => this.setState({ pairDropdownExchange: e });
 
   handlePairDelete = (item) => {
-    let newSettings = main.store.get('preferences')
-    newSettings['currencies'] = newSettings.currencies
-    .filter((x,index)=>{return item !== index})
-    main.store.set('preferences', newSettings)
-    this.setState({currentSettings:newSettings})
-    Socket.disconnect()
-    Socket.connect(main.store, main.tray, main.getImage, Config, this.handleSocket)
+    let newSettings = main.store.get('preferences');
+    newSettings['currencies'] = newSettings.currencies.filter((x, index) => {
+      return item !== index;
+    });
+
+    main.store.set('preferences', newSettings);
+    this.setState({ currentSettings: newSettings });
+
+    Socket.disconnect();
+    Socket.connect(main.store, main.tray, main.getImage, Config, this.handleSocket);
   }
 
   handlePairAdd = (e) => {
     e.preventDefault();
-    let newSettings = main.store.get('preferences')
+
+    let newSettings = main.store.get('preferences');
     let newItem = [{
       "exchange": this.state.pairDropdownExchange.value,
       "from": this.state.pairDropdownFrom.value,
       "to": this.state.pairDropdownTo.value,
       "default": false
-    }]
-    newSettings['currencies'] = newSettings['currencies'].concat(newItem)
-    main.store.set('preferences', newSettings)
-    this.setState({currentSettings:newSettings,subpage:'main'})
-    Socket.disconnect()
-    Socket.connect(main.store, main.tray, main.getImage, Config, this.handleSocket)
+    }];
+
+    newSettings['currencies'] = newSettings['currencies'].concat(newItem);
+    main.store.set('preferences', newSettings);
+
+    this.setState({
+      currentSettings: newSettings,
+      subpage:'main',
+    });
+
+    Socket.disconnect();
+    Socket.connect(main.store, main.tray, main.getImage, Config, this.handleSocket);
   }
 
   handleRefreshPref = () => {
-    Socket.disconnect()
-    Socket.connect(main.store, main.tray, main.getImage, Config, this.handleSocket)
-    this.setState({page:'home',internetOffline:false})
+    Socket.disconnect();
+    Socket.connect(main.store, main.tray, main.getImage, Config, this.handleSocket);
+    this.setState({
+      page: 'home',
+      internetOffline: false,
+    });
   }
 
-  handlePageUpdate = (page) => {
-    this.setState({page:'currencies'})
-  }
+  handlePageUpdate = (page) => this.setState({page:'currencies'});
 
   handleSubpage = (e) => {
-    this.setState({subpage:e})
-    this.setState({pairDropdownExchange:null,pairDropdownFrom:null,pairDropdownTo:null})
+    this.setState({
+      subpage: e,
+      pairDropdownExchange: null,
+      pairDropdownFrom: null,
+      pairDropdownTo: null
+    });
   }
 
   handleSocket = (data) => {
@@ -111,23 +132,22 @@ export default class App extends Component {
           priceData: data[key],
           direction: data[key].flag === '1' ? 'up' : 'down'
         }
-      })
-      this.setState({data: prices})
+      });
 
-      if (prices.length > 0) {
-        this.setState({loading: false})
-      }
+      this.setState({ data: prices });
 
-      if (prices.length == 0) {
-        this.setState({loading: true})
-      }
+      if (prices.length > 0) this.setState({ loading: false });
+
+      if (prices.length == 0) this.setState({ loading: true });
 
       try {
         // Handle changes in the selected currency for the tray
-        let selectedTray = main.store.get('preferences').currencies.filter(x => x.default)[0] || main.store.get('preferences').currencies[0]
-        let trayData = data[selectedTray.from + selectedTray.to + selectedTray.exchange]
+        let selectedTray = main.store.get('preferences').currencies
+          .filter(x => x.default)[0] || main.store.get('preferences').currencies[0];
+        let trayData = data[selectedTray.from + selectedTray.to + selectedTray.exchange];
+
         main.tray.setImage(main.getImage(selectedTray.from));
-        main.tray.setTitle(`${trayData.prefix}${formatCurrency(trayData.price, {minFraction:2, maxFraction: 8})}`)
+        main.tray.setTitle(`${trayData.prefix}${formatCurrency(trayData.price, {minFraction:2, maxFraction: 8})}`);
       } catch (error) {
         console.log("Couldn't change the tray image")
       }
@@ -135,76 +155,67 @@ export default class App extends Component {
       this.setState({
         data: [],
         loading: false
-      })
-        // No currency being monitored
-        main.tray.setImage(main.getImage('blank'));
-        main.tray.setTitle(`Empty`)
+      });
 
+      // No currency being monitored
+      main.tray.setImage(main.getImage('blank'));
+      main.tray.setTitle(`Empty`);
     }
   }
 
-  handleOffline = () => {
-    this.setState({internetOffline:true})
-  }
+  handleOffline = () => this.setState({ internetOffline: true });
 
   handleSettingsButton = () => {
-    if(this.state.subpage == 'main'){
-      this.setState({page:'home'})
-    }else{
-      this.setState({subpage:'main'})
+    if (this.state.subpage == 'main') {
+      this.setState({ page: 'home' });
+    } else {
+      this.setState({ subpage: 'main' });
     }
   }
 
   componentWillMount() {
     // right click menu
-    let changePage= page=>{
-      this.setState({page:page})
-    }
-    menu.append(new MenuItem({label: 'About Crypto Bar', click() { main.open('https://github.com/geraldoramos/crypto-bar') }}))
-    menu.append(new MenuItem({type: 'separator'}))
+    let changePage = (page) => this.setState({ page });
+
+    menu.append(new MenuItem({label: 'About Crypto Bar', click() { main.open('https://github.com/geraldoramos/crypto-bar') }}));
+    menu.append(new MenuItem({type: 'separator'}));
     menu.append(new MenuItem({label: 'Currencies', click() { changePage('currencies') }}))
     menu.append(new MenuItem({type: 'separator'}))
     menu.append(new MenuItem({label: 'Quit',accelerator:'CommandOrControl+Q', click() { main.app.quit() }}))
 
     window.addEventListener('contextmenu', (e) => {
-      e.preventDefault()
-      menu.popup(remote.getCurrentWindow())
-    }, false)
+      e.preventDefault();
+
+      menu.popup(remote.getCurrentWindow());
+    }, false);
 
     // Detect internet connection state
-    window.addEventListener('online',  this.handleRefreshPref)
-    window.addEventListener('offline',  this.handleOffline)
+    window.addEventListener('online',  this.handleRefreshPref);
+    window.addEventListener('offline',  this.handleOffline);
 
     // Get current settings
-    this.setState({currentSettings:main.store.get('preferences')})
-    this.setState({version:main.app.getVersion()})
+    this.setState({ currentSettings: main.store.get('preferences') });
+    this.setState({ version: main.app.getVersion() });
 
     // Websocket data
     try {
-      Socket.connect(main.store, main.tray, main.getImage, Config, this.handleSocket)
+      Socket.connect(main.store, main.tray, main.getImage, Config, this.handleSocket);
     } catch (error) {
-      this.setState({loading:true})
-      Socket.disconnect()
-      Socket.connect(main.store, main.tray, main.getImage, Config, this.handleSocket)
+      this.setState({ loading:true });
+      Socket.disconnect();
+      Socket.connect(main.store, main.tray, main.getImage, Config, this.handleSocket);
     }
 
-
     // Handle main events
-    ipcRenderer.on('update' , function(event , result) {
-        this.setState({updateAvailable:result.updateAvailable,updateInfo:result.updateInfo})
-        if(result.updateAvailable){
-          console.log(result)
-        }
-    }.bind(this))
+    ipcRenderer.on('update', (event, result) => {
+      this.setState({updateAvailable:result.updateAvailable,updateInfo:result.updateInfo})
+      if(result.updateAvailable){
+        console.log(result)
+      }
+    });
 
-    ipcRenderer.on('suspend' , function(event , result) {
-      this.handleOffline()
-    }.bind(this))
-
-    ipcRenderer.on('resume' , function(event , result) {
-      this.handleRefreshPref()
-    }.bind(this))
-
+    ipcRenderer.on('suspend', () => this.handleOffline());
+    ipcRenderer.on('resume', () => this.handleRefreshPref());
   }
 
   render() {
