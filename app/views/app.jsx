@@ -1,57 +1,38 @@
-'use babel';
-
-import React from 'react';
-import {ipcRenderer, remote} from 'electron'
-import { Circle } from 'better-react-spinkit'
-import Select from 'react-select'
-import VirtualizedSelect from 'react-virtualized-select'
-import formatCurrency from 'format-currency'
+import React, { Component } from 'react';
+import { ipcRenderer, remote } from 'electron';
+import { Circle } from 'better-react-spinkit';
+import Select from 'react-select';
+import VirtualizedSelect from 'react-virtualized-select';
+import formatCurrency from 'format-currency';
 import { Scrollbars } from 'react-custom-scrollbars';
-const {Menu, MenuItem} = remote
-const main = remote.require('./main.js')
-const Config = require('../config.json')
-const Socket = require('../pricing_service')
-const iconColor = {color:'#675BC0'}
-const menu = new Menu()
+
+const { Menu, MenuItem } = remote;
+const main = remote.require('../../electron.js');
+const Config = require('../../config.json');
+const Socket = require('../../pricing_service');
+const iconColor = { color:'#675BC0' };
+const menu = new Menu();
 let prices;
 
-export default class Main extends React.Component {
-
-  constructor() {
-    super()
-    this.state = {
-      version:null,
-      data:[],
-      updateAvailable:false,
-      updateInfo:'',
-      loading:true,
-      page:'home',
-      subpage:'main',
-      currentSettings: {},
-      selectedBox: main.store.get('preferences').currencies.filter(x=>x.default)
-      .map(x=>x.from+x.to+x.exchange)[0],
-      internetOffline: false,
-      pairDropdownFrom: null,
-      pairDropdownTo: null,
-      pairDropdownExchange: null
-    };
-
-    this.handleBox = this.handleBox.bind(this)
-    this.handlePairAdd = this.handlePairAdd.bind(this)
-    this.handlePairDropdownFrom = this.handlePairDropdownFrom.bind(this)
-    this.handlePairDropdownTo = this.handlePairDropdownTo.bind(this)
-    this.handlePairDropdownExchange = this.handlePairDropdownExchange.bind(this)
-    this.handlePairDelete = this.handlePairDelete.bind(this)
-    this.handlePageUpdate = this.handlePageUpdate.bind(this)
-    this.handleRefreshPref = this.handleRefreshPref.bind(this)
-    this.handleOpen = this.handleOpen.bind(this)
-    this.handleSettingsButton = this.handleSettingsButton.bind(this)
-    this.handleSocket = this.handleSocket.bind(this)
-    this.handleOffline = this.handleOffline.bind(this)
-    this.handleSubpage = this.handleSubpage.bind(this)
+export default class App extends Component {
+  state = {
+    version: null,
+    data: [],
+    updateAvailable: false,
+    updateInfo: '',
+    loading: true,
+    page: 'home',
+    subpage: 'main',
+    currentSettings: {},
+    selectedBox: main.store.get('preferences').currencies.filter(x => x.default)
+      .map(x => x.from + x.to + x.exchange)[0],
+    internetOffline: false,
+    pairDropdownFrom: null,
+    pairDropdownTo: null,
+    pairDropdownExchange: null,
   }
 
-  handleBox(from, to, price, exchange, prefix){
+  handleBox = (from, to, price, exchange, prefix) => {
     let newSettings = main.store.get('preferences')
     newSettings['currencies'] = newSettings['currencies'].map(x=>{
       if(x.from === from && x.to === to && x.exchange === exchange){
@@ -76,21 +57,13 @@ export default class Main extends React.Component {
     this.setState({selectedBox:from+to+exchange})
   }
 
-  handleOpen(url){
-    main.open(url)
-  }
+  handleOpen = (url) =>main.open(url);
 
-  handlePairDropdownFrom(e){
-    this.setState({pairDropdownFrom:e})
-  }
-  handlePairDropdownTo(e){
-    this.setState({pairDropdownTo:e})
-  }
-  handlePairDropdownExchange(e){
-    this.setState({pairDropdownExchange:e})
-  }
+  handlePairDropdownFrom = (e) => this.setState({ pairDropdownFrom: e });
+  handlePairDropdownTo = (e) => this.setState({ pairDropdownTo: e });
+  handlePairDropdownExchange = (e) => this.setState({ pairDropdownExchange: e });
 
-  handlePairDelete(item){
+  handlePairDelete = (item) => {
     let newSettings = main.store.get('preferences')
     newSettings['currencies'] = newSettings.currencies
     .filter((x,index)=>{return item !== index})
@@ -100,7 +73,7 @@ export default class Main extends React.Component {
     Socket.connect(main.store, main.tray, main.getImage, Config, this.handleSocket)
   }
 
-  handlePairAdd(e){
+  handlePairAdd = (e) => {
     e.preventDefault();
     let newSettings = main.store.get('preferences')
     let newItem = [{
@@ -116,23 +89,22 @@ export default class Main extends React.Component {
     Socket.connect(main.store, main.tray, main.getImage, Config, this.handleSocket)
   }
 
-  handleRefreshPref(){
+  handleRefreshPref = () => {
     Socket.disconnect()
     Socket.connect(main.store, main.tray, main.getImage, Config, this.handleSocket)
     this.setState({page:'home',internetOffline:false})
   }
 
-  handlePageUpdate(page){
+  handlePageUpdate = (page) => {
     this.setState({page:'currencies'})
   }
 
-  handleSubpage(e){
+  handleSubpage = (e) => {
     this.setState({subpage:e})
     this.setState({pairDropdownExchange:null,pairDropdownFrom:null,pairDropdownTo:null})
-
   }
 
-  handleSocket(data) {
+  handleSocket = (data) => {
     if (main.store.get('preferences').currencies.length !== 0) {
       prices = Object.keys(data).map(key => {
         return {
@@ -171,11 +143,11 @@ export default class Main extends React.Component {
     }
   }
 
-  handleOffline(){
+  handleOffline = () => {
     this.setState({internetOffline:true})
   }
 
-  handleSettingsButton(){
+  handleSettingsButton = () => {
     if(this.state.subpage == 'main'){
       this.setState({page:'home'})
     }else{
@@ -183,7 +155,7 @@ export default class Main extends React.Component {
     }
   }
 
-  componentWillMount(){
+  componentWillMount() {
     // right click menu
     let changePage= page=>{
       this.setState({page:page})
@@ -215,7 +187,7 @@ export default class Main extends React.Component {
       Socket.disconnect()
       Socket.connect(main.store, main.tray, main.getImage, Config, this.handleSocket)
     }
-    
+
 
     // Handle main events
     ipcRenderer.on('update' , function(event , result) {
@@ -236,8 +208,7 @@ export default class Main extends React.Component {
   }
 
   render() {
-
-    if(this.state.internetOffline){
+    if (this.state.internetOffline) {
       return (
         <div className="myarrow">
         <div className="page darwin">
@@ -253,14 +224,14 @@ export default class Main extends React.Component {
               <center><i style={iconColor} className="fas fa-frown"/>
               <h2> No internet Connection </h2></center>
               </div>
-              {Footer} 
+              {Footer}
           </div>
         </div>
         </div>
       )
     }
 
-    if(this.state.loading){
+    if (this.state.loading) {
       return (
         <div className="myarrow">
         <div className="page darwin">
@@ -276,26 +247,33 @@ export default class Main extends React.Component {
               <center><Circle size={20} color="#675BC0"/>
               <h2> Fetching data </h2></center>
               </div>
-              {Footer} 
+              {Footer}
           </div>
         </div>
         </div>
       )
     }
-    
-    let Footer = (<div className="footer">
-    <h2><a onClick={() => this.handleOpen('https://github.com/geraldoramos/crypto-bar')}>Crypto Bar </a> 
-    <span className="version">{this.state.version}</span>
-    { this.state.updateAvailable ?
-    <span>&nbsp;(Restart to Update)</span> : null}
-    </h2>
-    </div>)
+
+    let Footer = (
+      <div className="footer">
+        <h2>
+          <a onClick={() => this.handleOpen('https://github.com/geraldoramos/crypto-bar')}>
+            Crypto Bar
+          </a>
+          <span className="version">
+            {this.state.version}
+          </span>
+          {this.state.updateAvailable ? <span>(Restart to Update)</span> : null}
+        </h2>
+      </div>
+    );
 
     // Price direction icon
-    if(this.state.page === 'home'){
-      let preDirection = '1'
+    if (this.state.page === 'home') {
+      let preDirection = '1';
+
       let priceDirection = (dir) => {
-        if(dir==="1"){
+        if (dir==="1") {
           preDirection = dir
           return <i className="fas fa-caret-up up"/>
         } else if(dir==="2"){
@@ -309,51 +287,51 @@ export default class Main extends React.Component {
           return <i className="fas fa-caret-down down"/>
         }
       }
-      
+
       let currencyList = this.state.data.map ((x,i) =>{
-          return (
-            <div className="box" href="#" key={i} onClick={() => 
-            this.handleBox(x.priceData.from, x.priceData.to, x.priceData.price, x.priceData.exchange, x.priceData.prefix)}>
-            <div className="currency">{x.priceData.from} <span className="exchange">
-            ({x.priceData.exchangeFallback || x.priceData.exchange})</span> </div>
-            <div className="price">{x.priceData.prefix}{formatCurrency(x.priceData.price, {minFraction:2, maxFraction: 8})}&nbsp;
-            {x.priceData.volume24h==0 ? null : priceDirection(x.priceData.flag)}</div>
-            <div className="volume">
-            {x.priceData.volume24h==0?'no volume data':`V:${formatCurrency(x.priceData.volume24h)}`}</div>
-            {this.state.selectedBox === x.priceData.from + x.priceData.to + x.priceData.exchange ?
-            <div className={"tick"}><i className="fas fa-check"/></div>:null}
-          </div>)
+        return (
+          <div className="box" href="#" key={i} onClick={() =>
+          this.handleBox(x.priceData.from, x.priceData.to, x.priceData.price, x.priceData.exchange, x.priceData.prefix)}>
+          <div className="currency">{x.priceData.from} <span className="exchange">
+          ({x.priceData.exchangeFallback || x.priceData.exchange})</span> </div>
+          <div className="price">{x.priceData.prefix}{formatCurrency(x.priceData.price, {minFraction:2, maxFraction: 8})}&nbsp;
+          {x.priceData.volume24h==0 ? null : priceDirection(x.priceData.flag)}</div>
+          <div className="volume">
+          {x.priceData.volume24h==0?'no volume data':`V:${formatCurrency(x.priceData.volume24h)}`}</div>
+          {this.state.selectedBox === x.priceData.from + x.priceData.to + x.priceData.exchange ?
+          <div className={"tick"}><i className="fas fa-check"/></div>:null}
+        </div>)
       })
 
     return (
-    <div className="myarrow">
-      <div className="page darwin">
-        <div className="container">
-          <div className="header">
-          <div className="title"><h1><span className="main-title">
-          <i style={iconColor} className="fas fa-signal"/> Dashboard</span>
-          <div className="settings" onClick={() => this.handlePageUpdate('settings')}>
-          <i style={iconColor} className="fas fa-cog"/></div></h1></div>
-          </div>
-        <div className="inside">
-        {currencyList.length == 0 ? <center><h2> Empty List, add some pairs! </h2></center>:null}
-        {currencyList.length > 6 ? <Scrollbars autoHeight autoHide autoHeightMin={340}>
-          <div className="row">
-              {currencyList}
+      <div className="myarrow">
+        <div className="page darwin">
+          <div className="container">
+            <div className="header">
+            <div className="title"><h1><span className="main-title">
+            <i style={iconColor} className="fas fa-signal"/> Dashboard</span>
+            <div className="settings" onClick={() => this.handlePageUpdate('settings')}>
+            <i style={iconColor} className="fas fa-cog"/></div></h1></div>
             </div>
-            </Scrollbars>:
+          <div className="inside">
+          {currencyList.length == 0 ? <center><h2> Empty List, add some pairs! </h2></center>:null}
+          {currencyList.length > 6 ? <Scrollbars autoHeight autoHide autoHeightMin={340}>
             <div className="row">
-            {currencyList}
-            </div>}
-            </div>
-            {Footer} 
+                {currencyList}
+              </div>
+              </Scrollbars>:
+              <div className="row">
+              {currencyList}
+              </div>}
+              </div>
+              {Footer}
+          </div>
         </div>
       </div>
-      </div>
-    )
+    );
   }
 
-  if(this.state.page === 'currencies'){
+  if (this.state.page === 'currencies') {
 
   let SubOptions = this.state.currentSettings.currencies.map((x,i) => {
     return  (<div className="currencies-list" key={i}><div className="currencies-item">
@@ -377,8 +355,9 @@ export default class Main extends React.Component {
       <i className="fas fa-2x fa-plus-circle"/></div>
       </div>)
     }
+
     if(this.state.subpage==='add'){
-      return (<div><div className="submenu-subtitle"><strong>Add new pair </strong><br/>If there is no data 
+      return (<div><div className="submenu-subtitle"><strong>Add new pair </strong><br/>If there is no data
       available for selected exchange, <a onClick={()=> {this.handleOpen('http://bit.ly/2pH6R7N')}}>
       CryptoCompare</a> Index is used</div>
         <form onSubmit={this.handlePairAdd}>
@@ -424,7 +403,7 @@ export default class Main extends React.Component {
         </div>)
     }
   }
-      
+
   return (
     <div className="myarrow">
       <div className="page darwin">
@@ -436,7 +415,7 @@ export default class Main extends React.Component {
           <i style={iconColor} className="fas fa-arrow-circle-left"/></div></h1></div>
           </div>
         <div className="inside">
-          {subPage()}  
+          {subPage()}
         </div></div>
         {Footer}
       </div>
