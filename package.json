@@ -99,5 +99,9 @@
     "dmg": {
       "background": "assets/background.tiff"
     }
-  }
+  },
+  "pre-commit": [
+    "lint:precommit",
+    "flow:precommit"
+  ]
 }
