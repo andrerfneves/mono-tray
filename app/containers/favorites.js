@@ -1,7 +1,7 @@
 // @flow
 
 import { connect } from 'react-redux';
-import DashboardView from '../views/dashboard';
+import FavoritesView from '../views/favorites';
 import { addTodo } from '../actions/add-todo';
 import { deleteTodo } from '../actions/delete-todo';
 import { toggleEdit } from '../actions/toggle-edit-todo';
@@ -25,4 +25,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(DashboardView);
+)(FavoritesView);

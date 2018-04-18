@@ -1,12 +1,16 @@
 import React from 'react';
 import AddIcon from 'react-icons/lib/io/android-add';
 import SyncIcon from 'react-icons/lib/io/android-sync';
+import { Link } from 'react-router-dom';
 
 export default () => (
   <div className='header'>
-    <div className='header__icon'>
+    <Link
+      className='header__icon'
+      to='/add'
+    >
       <AddIcon />
-    </div>
+    </Link>
     <div className='header__title'>mono tray</div>
     <div className='header__icon'>
       <SyncIcon />
