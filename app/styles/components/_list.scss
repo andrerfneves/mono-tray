@@ -1,0 +1,54 @@
+.list {
+  margin: calc(#{$header-height} + #{$menu-height}) 0 $header-height 0;
+  list-style-type: none;
+  padding: 0;
+  width: 100%;
+  overflow-y: scroll;
+
+  &__item {
+    height: 3.25rem;
+    border-bottom: $border;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.75rem;
+    transition: $transition;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &__info {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+
+    &__name {
+      font-size: 14px;
+    }
+
+    &__image {
+      height: 30px;
+      width: 30px;
+      margin-right: 10px;
+    }
+
+    &__price {
+      font-weight: 700;
+      font-size: 13px;
+      color: $icon-color;
+      transition: $transition;
+    }
+
+    &:hover {
+      background-color: #f5f5f5;
+
+      .list__item__price {
+        color: $brand-dark;
+      }
+    }
+  }
+}

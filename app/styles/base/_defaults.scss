@@ -1,0 +1,23 @@
+// Defaults
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  color: $main-text;
+  font-family: 'Ubuntu', serif;
+}
+
+img {
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+.mono {
+  width: 100vw;
+  height: 100vh;
+}

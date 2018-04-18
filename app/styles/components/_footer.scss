@@ -1,0 +1,30 @@
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: $header-height;
+  border-top: $border;
+  color: #000;
+  background-color: $brand-light;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5rem 0 0.75rem;
+
+  &__icon {
+    font-size: 1.3rem;
+    color: $icon-color;
+    transition: $transition;
+
+    &:hover {
+      color: $brand-dark;
+    }
+  }
+
+  &__version {
+    color: #e8e8e8;
+    font-size: 0.75rem;
+  }
+}

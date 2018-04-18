@@ -1,10 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './views/app';
+import App from './app';
+import './styles/main.scss';
 
-window.onload = function() {
-  ReactDOM.render(
-    <App />,
-    document.getElementById('app'),
-  );
-}
+const el = document.getElementById('root');
+ReactDOM.render(<App />, el);

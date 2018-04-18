@@ -1,0 +1,8 @@
+.dashboard {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: $brand-light;
+  flex-direction: column;
+  justify-content: space-between;
+}

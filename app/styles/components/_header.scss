@@ -1,0 +1,31 @@
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: $brand-light;
+  border-bottom: $border;
+  height: $header-height;
+  width: 100%;
+  color: #000;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+
+  &__icon {
+    font-size: 1.3rem;
+    color: $icon-color;
+    transition: $transition;
+
+    &:hover {
+      color: $brand-dark;
+    }
+  }
+
+  &__title {
+    color: $brand-dark;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+}

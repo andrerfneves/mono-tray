@@ -42,10 +42,10 @@ const showStatus = (text) => {
   }
 
   mainWindow.webContents.send('update', {
-    updateAvailable: updateAvailable,
+    updateAvailable,
     updateInfo: text,
   });
-}
+};
 
 function createWindow() {
   // -------------
@@ -56,12 +56,12 @@ function createWindow() {
   autoUpdater.on('checking-for-update', () => showStatus('Checking for update...'));
   autoUpdater.on('update-available', () => showStatus('Update available.'));
   autoUpdater.on('update-not-available', () => showStatus('No updates available.'));
-  autoUpdater.on('error', (err) => showStatus('Error while updating: ' + err));
+  autoUpdater.on('error', err => showStatus(`Error while updating: ${err}`));
 
   autoUpdater.on('download-progress', (progress) => {
-    let logMessage = "Download speed: " + progress.bytesPerSecond;
-    logMessage = logMessage + ' - Downloaded ' + progress.percent + '%';
-    logMessage = logMessage + ' (' + progress.transferred + "/" + progress.total + ')';
+    let logMessage = `Download speed: ${progress.bytesPerSecond}`;
+    logMessage = `${logMessage} - Downloaded ${progress.percent}%`;
+    logMessage = `${logMessage} (${progress.transferred}/${progress.total})`;
 
     showStatus(logMessage);
   });
@@ -79,6 +79,7 @@ function createWindow() {
     height: 435,
     transparent: true,
     frame: false,
+    resizable: true,
     webPreferences: {
       devTools: true,
     },
@@ -86,18 +87,8 @@ function createWindow() {
 
   mainWindow.setVisibleOnAllWorkspaces(true);
   app.dock.hide();
-  tray = new Tray(path.join(__dirname, 'assets', 'btcTemplate.png'))
+  tray = new Tray(path.join(__dirname, 'assets', 'btcTemplate.png'));
   tray.setTitle('Fetching...');
-
-  // helper to get image from config file
-  const getImage = type => {
-    let crypto = Config.tickers.filter(x => type === x.symbol)[0];
-    if (crypto && crypto.image && crypto.image.length > 0) {
-      return path.join(__dirname, 'assets', crypto.image);
-    } else {
-      return path.join(__dirname, 'assets', 'blankTemplate.png');
-    }
-  }
 
   registerDebugShortcut();
   loadAnalytics(app);
@@ -107,8 +98,9 @@ function createWindow() {
   // Init & Positioning Methods
   // --------------------------
   tray.setToolTip('Crypto Bar');
-  mainWindow.loadURL(`file://${__dirname}/app/index.html`);
-  let positioner = new Positioner(mainWindow);
+  // mainWindow.loadURL(`file://${__dirname}/dist/index.html`);
+  mainWindow.loadURL('http://localhost:8080/');
+  const positioner = new Positioner(mainWindow);
   let bounds = tray.getBounds();
   positioner.move('trayCenter', bounds);
 
@@ -144,7 +136,6 @@ function createWindow() {
   exports.store = store;
   exports.app = app;
   exports.open = open;
-  exports.getImage = getImage;
   exports.tray = tray;
 }
 
