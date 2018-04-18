@@ -3,4 +3,4 @@ dist/
 yarn.lock
 .DS_Store
 .vscode
-package-lock.json
+keys.js
