@@ -37,9 +37,7 @@ let tray = null;
 const showStatus = (text) => {
   log.info(text);
 
-  if (text === 'Update downloaded') {
-    updateAvailable = true;
-  }
+  if (text === 'Update downloaded') updateAvailable = true;
 
   mainWindow.webContents.send('update', {
     updateAvailable,
@@ -82,14 +80,18 @@ function createWindow() {
     resizable: true,
     webPreferences: {
       devTools: true,
+      webSecurity: false,
     },
   });
 
   mainWindow.setVisibleOnAllWorkspaces(true);
   app.dock.hide();
-  tray = new Tray(path.join(__dirname, 'assets', 'btcTemplate.png'));
-  tray.setTitle('Fetching...');
+  tray = new Tray(path.join(__dirname, 'public', 'tray.png'));
+  // tray.setTitle('Fetching...');
 
+  // -------------
+  // Miscellaneous
+  // -------------
   registerDebugShortcut();
   loadAnalytics(app);
   checkHeartbeat(app, updateAvailable, autoUpdater);
