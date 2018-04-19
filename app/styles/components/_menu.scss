@@ -10,6 +10,7 @@
   position: absolute;
   top: $header-height;
   left: 0;
+  z-index: $layout-z-index;
 
   a {
     flex: 1;

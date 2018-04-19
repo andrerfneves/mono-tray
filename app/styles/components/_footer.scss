@@ -12,6 +12,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 0.5rem 0 0.75rem;
+  z-index: $layout-z-index;
 
   &__icon {
     font-size: 1.3rem;

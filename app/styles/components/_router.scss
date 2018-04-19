@@ -1,0 +1,11 @@
+.mono-router-wrapper {
+  position: relative;
+}
+
+.mono-router-wrapper > div {
+  position: absolute;
+  width: 100%;
+  z-index: $router-z-index;
+  overflow-y: scroll;
+  height: 100vh;
+}
