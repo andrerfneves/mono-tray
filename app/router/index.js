@@ -4,10 +4,10 @@ import { AnimatedSwitch } from 'react-router-transition';
 import FavoritesContainer from '../containers/favorites';
 import AllMarketsContainer from '../containers/all-markets';
 import AddFavoriteContainer from '../containers/add-favorite';
+import SettingsContainer from '../containers/settings';
 import Footer from '../components/footer';
 import Header from '../components/header';
 import Menu from '../components/menu';
-import AboutView from '../views/about';
 import NotFoundView from '../views/not-found';
 import { bounceTransition, mapStyles } from './transition';
 
@@ -26,7 +26,7 @@ export default () => (
         <Route path='/' exact component={FavoritesContainer} />
         <Route path='/all' component={AllMarketsContainer} />
         <Route path='/add' component={AddFavoriteContainer} />
-        <Route path='/about' component={AboutView} />
+        <Route path='/settings' component={SettingsContainer} />
         <Route component={NotFoundView} />
       </AnimatedSwitch>
     </Fragment>

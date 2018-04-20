@@ -1,7 +1,9 @@
 // @flow
 
 import { connect } from 'react-redux';
-import AddFavoriteView from '../views/add-favorite';
+import SettingsView from '../views/settings';
+// import type { AppState } from '../types/app-state';
+// import type { Dispatch } from '../types/redux';
 
 // const mapStateToProps = (state: AppState) => ({
 //   todos: state.todos,
@@ -18,4 +20,4 @@ import AddFavoriteView from '../views/add-favorite';
 export default connect(null, null,
   // mapStateToProps,
   // mapDispatchToProps,
-)(AddFavoriteView);
+)(SettingsView);

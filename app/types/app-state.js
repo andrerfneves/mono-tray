@@ -1,5 +1,5 @@
 // @flow
 
 export type AppState = {
-  todos: Array<*>,
+  dashboard: Array<*>,
 };

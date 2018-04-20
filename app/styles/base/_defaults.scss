@@ -21,4 +21,7 @@ a {
   width: 100vw;
   height: 100vh;
   background: $brand-light;
+  -webkit-box-shadow: 10px 10px 105px 0px rgba(212, 212, 212, 1);
+  -moz-box-shadow: 10px 10px 105px 0px rgba(212, 212, 212, 1);
+  box-shadow: 10px 10px 105px 0px rgba(212, 212, 212, 1);
 }

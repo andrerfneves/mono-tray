@@ -1,0 +1,12 @@
+.spinner {
+  display: flex;
+
+  &--full {
+    color: $icon-color;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - (2 * #{$header-height}) - #{$menu-height});
+  }
+}

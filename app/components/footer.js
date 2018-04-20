@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import MenuIcon from 'react-icons/lib/io/android-menu';
 
 export default () => (
@@ -6,8 +7,11 @@ export default () => (
     <div className='footer__version'>
       v0.4.0
     </div>
-    <div className='footer__icon'>
+    <Link
+      className='footer__icon'
+      to='/settings'
+    >
       <MenuIcon />
-    </div>
+    </Link>
   </div>
 );
