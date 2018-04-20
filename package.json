@@ -21,8 +21,10 @@
   "dependencies": {
     "axios": "^0.17.1",
     "better-react-spinkit": "^2.0.4",
+    "classnames": "^2.2.5",
     "format-currency": "^1.0.0",
     "node-machine-id": "^1.1.10",
+    "numeral": "^2.0.6",
     "open": "0.0.5",
     "path": "^0.12.7",
     "raven": "^2.4.0",
