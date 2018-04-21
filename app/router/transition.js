@@ -6,14 +6,14 @@ export const mapStyles = styles => ({
 });
 
 const bounce = val => spring(val, {
-  stiffness: 330,
-  damping: 30,
+  stiffness: 310,
+  damping: 22,
 });
 
 export const bounceTransition = {
   atEnter: {
     opacity: 0,
-    scale: 1.1,
+    scale: 1.2,
   },
   atLeave: {
     opacity: bounce(0),

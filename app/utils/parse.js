@@ -15,3 +15,15 @@ export const parseDashboardData = array => array.map((asset) => {
   };
 }).sort((assetA, assetB) => assetA.marketCap - assetB.marketCap)
   .reverse();
+
+export const parsePricesData = (array) => {
+  const prices = {};
+
+  array.forEach((asset) => {
+    const { price, currency } = asset;
+
+    prices[currency] = price;
+  });
+
+  return prices;
+};
