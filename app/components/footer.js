@@ -1,12 +1,22 @@
+// @flow
+
 import React from 'react';
 import { Link } from 'react-router-dom';
+import SyncIcon from 'react-icons/lib/io/android-sync';
 import MenuIcon from 'react-icons/lib/io/android-menu';
 
-export default () => (
+type Props = {
+  dataRefresh: Function,
+};
+
+export default (props: Props) => (
   <div className='footer'>
-    <div className='footer__version'>
-      v0.4.0
-    </div>
+    <button
+      onClick={() => props.dataRefresh()}
+      className='footer__icon'
+    >
+      <SyncIcon />
+    </button>
     <Link
       className='footer__icon'
       to='/settings'

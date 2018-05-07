@@ -1,6 +1,6 @@
 import React from 'react';
 import AddIcon from 'react-icons/lib/io/android-add';
-import SyncIcon from 'react-icons/lib/io/android-sync';
+import SearchIcon from 'react-icons/lib/io/android-search';
 import { Link } from 'react-router-dom';
 
 export default () => (
@@ -12,8 +12,11 @@ export default () => (
       <AddIcon />
     </Link>
     <div className='header__title'>mono tray</div>
-    <div className='header__icon'>
-      <SyncIcon />
-    </div>
+    <Link
+      className='header__icon'
+      to='/login'
+    >
+      <SearchIcon />
+    </Link>
   </div>
 );

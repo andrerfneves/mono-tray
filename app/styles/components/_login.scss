@@ -1,0 +1,75 @@
+.login {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background: $brand-light;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 0.5rem;
+
+  &__logo {
+    color: $brand-dark;
+    font-weight: 700;
+    font-size: 1.3rem;
+    margin: 0 0 2rem 0;
+  }
+
+  &__input {
+    @include reset-text-input;
+    border: 1px solid $input-border;
+    padding: 14px 10px;
+    margin: 0 0 10px 0;
+    border-radius: 3px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__submit {
+    @include reset-button;
+    color: $brand-dark;
+    font-weight: 700;
+    font-size: 1rem;
+    background: #eee;
+    padding: 14px 10px;
+    margin: 15px 0 0 0;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+
+    &:hover {
+      background: #ddd;
+      transition: all 0.25s ease;
+    }
+  }
+
+  &__toggler {
+    @include reset-button;
+    padding: 14px 10px;
+    margin: 10px 0 0 0;
+    cursor: pointer;
+  }
+
+  &__header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: $brand-light;
+    border-bottom: $border;
+    height: $header-height;
+    width: 100%;
+  }
+
+  &__footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: $brand-light;
+    border-top: $border;
+    height: $header-height;
+    width: 100%;
+  }
+}

@@ -2,27 +2,23 @@
 
 import { connect } from 'react-redux';
 import AllMarketsView from '../views/all-markets';
-// import { addTodo } from '../actions/add-todo';
-// import { deleteTodo } from '../actions/delete-todo';
-// import { toggleEdit } from '../actions/toggle-edit-todo';
-// import { updateTodo } from '../actions/update-todo';
-// import { cancelUpdateTodo } from '../actions/cancel-update-todo';
-// import type { AppState } from '../types/app-state';
-// import type { Dispatch } from '../types/redux';
+import { fetchDashboard } from '../actions/dashboard';
+import { fetchPrices } from '../actions/prices';
+import type { AppState } from '../types/app-state';
+import type { Dispatch } from '../types/redux';
 
-// const mapStateToProps = (state: AppState) => ({
-//   todos: state.todos,
-// });
+const mapStateToProps = (state: AppState) => ({
+  dashboard: state.dashboard,
+  prices: state.prices,
+  loading: state.loading,
+});
 
-// const mapDispatchToProps = (dispatch: Dispatch) => ({
-//   addTodo: text => dispatch(addTodo(text)),
-//   deleteTodo: id => dispatch(deleteTodo(id)),
-//   toggleEdit: id => dispatch(toggleEdit(id)),
-//   updateTodo: (id, text) => dispatch(updateTodo(id, text)),
-//   cancelUpdateTodo: id => dispatch(cancelUpdateTodo(id)),
-// });
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  fetchDashboard: () => dispatch(fetchDashboard()),
+  fetchPrices: () => dispatch(fetchPrices()),
+});
 
-export default connect(null, null,
-  // mapStateToProps,
-  // mapDispatchToProps,
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
 )(AllMarketsView);

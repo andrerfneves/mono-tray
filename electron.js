@@ -35,7 +35,7 @@ let tray = null;
 // Main app logic
 //-------------------------------------------------------------------
 const showStatus = (text) => {
-  log.info(text);
+  // log.info(text);
 
   if (text === 'Update downloaded') updateAvailable = true;
 
@@ -121,6 +121,7 @@ function createWindow() {
   // -------------------
   // App Window Behavior
   // -------------------
+  mainWindow.once('ready-to-show', () => mainWindow.show());
   mainWindow.on('blur', () => mainWindow.hide());
   mainWindow.on('show', () => tray.setHighlightMode('always'));
   mainWindow.on('hide', () => tray.setHighlightMode('never'));

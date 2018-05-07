@@ -10,6 +10,7 @@ import type { Dispatch } from '../types/redux';
 const mapStateToProps = (state: AppState) => ({
   dashboard: state.dashboard,
   prices: state.prices,
+  loading: state.loading,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

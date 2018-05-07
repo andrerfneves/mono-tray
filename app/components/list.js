@@ -7,13 +7,17 @@ import Spinner from './spinner';
 
 type Props = {
   assets: Array<*>,
-  prices: object,
+  prices: Array<*>,
+  loading: Object,
 }
 
 const getCurrentPrice = (prices, currency) => prices[currency];
 
 const getListItems = (asset, prices) => (
-  <li className='list__item'>
+  <li
+    key={asset.currency}
+    className='list__item'
+  >
     <div className='list__item__info'>
       <img
         src={getAssetImage(asset.currency)}
@@ -38,7 +42,7 @@ const getListItems = (asset, prices) => (
 export default (props: Props) => (
   <ul className='list'>
     {
-      props.assets.length ?
+      !props.loading.status ?
         props.assets.map(asset => getListItems(asset, props.prices)) :
         <Spinner isFullBleed />
     }

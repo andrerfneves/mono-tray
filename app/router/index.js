@@ -5,7 +5,8 @@ import FavoritesContainer from '../containers/favorites';
 import AllMarketsContainer from '../containers/all-markets';
 import AddFavoriteContainer from '../containers/add-favorite';
 import SettingsContainer from '../containers/settings';
-import Footer from '../components/footer';
+import LoginContainer from '../containers/login';
+import Footer from '../containers/footer';
 import Header from '../components/header';
 import Menu from '../components/menu';
 import NotFoundView from '../views/not-found';
@@ -24,6 +25,7 @@ export default () => (
         className='mono-router-wrapper'
       >
         <Route path='/' exact component={FavoritesContainer} />
+        <Route path='/login' component={LoginContainer} />
         <Route path='/all' component={AllMarketsContainer} />
         <Route path='/add' component={AddFavoriteContainer} />
         <Route path='/settings' component={SettingsContainer} />
