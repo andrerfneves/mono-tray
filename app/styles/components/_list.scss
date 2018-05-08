@@ -8,6 +8,7 @@ $list-item-height: 3.25rem;
   overflow-y: scroll;
 
   &__item {
+    @include reset-button;
     height: $list-item-height;
     border-bottom: $border;
     width: 100%;

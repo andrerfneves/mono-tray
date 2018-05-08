@@ -1,6 +1,7 @@
 // @flow
 
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import AddFavoriteView from '../views/add-favorite';
 
 // const mapStateToProps = (state: AppState) => ({
@@ -15,7 +16,7 @@ import AddFavoriteView from '../views/add-favorite';
 //   cancelUpdateTodo: id => dispatch(cancelUpdateTodo(id)),
 // });
 
-export default connect(null, null,
+export default withRouter(connect(null, null,
   // mapStateToProps,
   // mapDispatchToProps,
-)(AddFavoriteView);
+)(AddFavoriteView));

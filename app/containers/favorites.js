@@ -1,6 +1,7 @@
 // @flow
 
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import FavoritesView from '../views/favorites';
 import { fetchDashboard } from '../actions/dashboard';
 import { fetchPrices } from '../actions/prices';
@@ -18,7 +19,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   fetchPrices: () => dispatch(fetchPrices()),
 });
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(FavoritesView);
+)(FavoritesView));

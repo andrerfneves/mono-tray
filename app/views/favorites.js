@@ -30,7 +30,12 @@ export default class FavoritesView extends PureComponent<Props> {
   }
 
   render() {
-    const { dashboard, prices, loading } = this.props;
+    const {
+      dashboard,
+      prices,
+      loading,
+      ...rest
+    } = this.props;
     const favoriteItems = [];
 
     ASSETS.forEach((asset) => {
@@ -46,6 +51,7 @@ export default class FavoritesView extends PureComponent<Props> {
           assets={favoriteItems}
           prices={prices}
           loading={loading}
+          {...rest}
         />
       </div>
     );
