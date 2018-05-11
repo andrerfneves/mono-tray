@@ -2,22 +2,24 @@
 
 import React, { PureComponent } from 'react';
 import Spinner from '../components/spinner';
+import type { DashboardType } from '../types/dashboard';
+import type { PricesType } from '../types/prices';
+import type { LoadingType } from '../types/loading';
+import type { AssetType } from '../types/asset';
 // import { getAssetImage } from '../utils/images';
 
 type Props = {
+  // Router
   match: Object,
-  dashboard: Array<*>,
-  prices: Object,
-  loading: Object,
-};
 
-type Asset = {
-  price: string,
-  data: Object,
+  // Data
+  dashboard: DashboardType,
+  loading: LoadingType,
+  prices: PricesType,
 };
 
 export default class AssetView extends PureComponent<Props> {
-  renderDaily = (asset: Asset) => {
+  renderDaily = (asset: AssetType) => {
     const { data } = asset;
 
     return (
@@ -33,7 +35,7 @@ export default class AssetView extends PureComponent<Props> {
     );
   }
 
-  renderWeekly = (asset: Asset) => {
+  renderWeekly = (asset: AssetType) => {
     const { data } = asset;
 
     return (
@@ -48,7 +50,7 @@ export default class AssetView extends PureComponent<Props> {
     );
   }
 
-  renderMonthly = (asset: Asset) => {
+  renderMonthly = (asset: AssetType) => {
     const { data } = asset;
 
     return (
@@ -63,7 +65,7 @@ export default class AssetView extends PureComponent<Props> {
     );
   }
 
-  renderYearly = (asset: Asset) => {
+  renderYearly = (asset: AssetType) => {
     const { data } = asset;
 
     return (
@@ -78,7 +80,7 @@ export default class AssetView extends PureComponent<Props> {
     );
   }
 
-  renderATH = (asset: Asset) => {
+  renderATH = (asset: AssetType) => {
     const { data } = asset;
 
     return (
@@ -93,7 +95,7 @@ export default class AssetView extends PureComponent<Props> {
     );
   }
 
-  renderGeneralInfo = (asset: Asset) => {
+  renderGeneralInfo = (asset: AssetType) => {
     const { data, price } = asset;
 
     return (

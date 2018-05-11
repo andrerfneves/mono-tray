@@ -5,18 +5,24 @@ import numeral from 'numeral';
 import cx from 'classnames';
 import { getAssetImage } from '../utils/images';
 import Spinner from './spinner';
+import type { DashboardType, DashboardItemType } from '../types/dashboard';
+import type { LoadingType } from '../types/loading';
+import type { PricesType } from '../types/prices';
 
 type Props = {
-  assets: Array<*>,
-  prices: any,
-  loading: Object,
-  history?: any,
+  // Router
+  history?: Object,
+
+  // Data
+  assets: DashboardType,
+  loading: LoadingType,
+  prices: PricesType,
 }
 
 export default class List extends PureComponent<Props> {
-  getCurrentPrice = (prices: any, currency: any) => prices[currency];
-  getCurrentDelta = (prices: any, asset: any) => {
-    const openPrice = asset.dayOpen || 0;
+  getCurrentPrice = (prices: PricesType, currency: string) => prices[currency];
+  getCurrentDelta = (prices: PricesType, asset: DashboardItemType) => {
+    const openPrice = Number(asset.dayOpen) || 0;
     const currentPrice = prices[asset.currency] || 0;
     const delta = (currentPrice / openPrice) - 1;
     const isNegative = delta < 0;
