@@ -16,7 +16,4 @@ import AddFavoriteView from '../views/add-favorite';
 //   cancelUpdateTodo: id => dispatch(cancelUpdateTodo(id)),
 // });
 
-export default withRouter(connect(null, null,
-  // mapStateToProps,
-  // mapDispatchToProps,
-)(AddFavoriteView));
+export default withRouter(connect(null, null)(AddFavoriteView));

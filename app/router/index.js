@@ -19,7 +19,7 @@ import Header from '../components/header';
 import Menu from '../components/menu';
 
 // Transition Specs
-const inactiveRouteTransition = { opacity: 0.1 };
+const inactiveRouteTransition = { opacity: 0 };
 const activeRouteTransition = { opacity: 1 };
 
 export default () => (
