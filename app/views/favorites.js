@@ -2,6 +2,9 @@
 
 import React, { PureComponent } from 'react';
 import List from '../components/list';
+import type { DashboardType } from '../types/dashboard';
+import type { LoadingType } from '../types/loading';
+import type { PricesType } from '../types/prices';
 
 const ASSETS = [
   { ticker: 'BTC' },
@@ -14,11 +17,14 @@ const ASSETS = [
 ];
 
 type Props = {
+  // Actions
   fetchDashboard: Function,
   fetchPrices: Function,
-  dashboard: Array<*>,
-  prices: Array<*>,
-  loading: Object,
+
+  // Data
+  dashboard: DashboardType,
+  loading: LoadingType,
+  prices: PricesType,
 }
 
 export default class FavoritesView extends PureComponent<Props> {

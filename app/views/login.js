@@ -6,6 +6,7 @@ const REGISTER = 'register';
 const LOGIN = 'login';
 
 type Props = {
+  // Actions
   createUser: Function,
   signIn: Function,
 };
