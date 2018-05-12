@@ -1,12 +1,13 @@
 // @flow
 
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import Spinner from '../components/spinner';
 import type { DashboardType } from '../types/dashboard';
 import type { PricesType } from '../types/prices';
 import type { LoadingType } from '../types/loading';
 import type { AssetType } from '../types/asset';
-// import { getAssetImage } from '../utils/images';
+import { getAssetImage } from '../utils/images';
+import { formatAmount, formatLargeAmount } from '../utils/currency';
 
 type Props = {
   // Router
@@ -99,15 +100,39 @@ export default class AssetView extends PureComponent<Props> {
     const { data, price } = asset;
 
     return (
-      <div className='asset__section'>
-        <div className='asset__section-title'>general info</div>
-        <ul className='asset__list'>
-          <li className='asset__list-item'>price: {price}</li>
-          <li className='asset__list-item'>max supply: {data.maxSupply}</li>
-          <li className='asset__list-item'>available supply: {data.availableSupply}</li>
-          <li className='asset__list-item'>market cap: {data.marketCap}</li>
-        </ul>
-      </div>
+      <Fragment>
+        <div className='asset__header'>
+          <div className='asset__image-wrapper'>
+            <img
+              src={getAssetImage(data.currency)}
+              alt={`${data.currency}`}
+              className='asset__image'
+            />
+          </div>
+          <div className='asset__header-content'>
+            <div className='asset__price'>
+              {formatAmount(price)}
+            </div>
+            <div className='asset__delta'>
+              {price}
+            </div>
+          </div>
+        </div>
+        <div className='asset__header-additional'>
+          <div className='asset__additional-item'>
+            <div className='asset__additional-item-label'>Supply</div>
+            <div className='asset__additional-item-content'>
+              {data.availableSupply}/{data.maxSupply}
+            </div>
+          </div>
+          <div className='asset__additional-item'>
+            <div className='asset__additional-item-label'>Market Cap</div>
+            <div className='asset__additional-item-content'>
+              {formatLargeAmount(data.marketCap)}
+            </div>
+          </div>
+        </div>
+      </Fragment>
     );
   }
 

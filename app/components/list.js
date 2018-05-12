@@ -8,6 +8,7 @@ import Spinner from './spinner';
 import type { DashboardType, DashboardItemType } from '../types/dashboard';
 import type { LoadingType } from '../types/loading';
 import type { PricesType } from '../types/prices';
+import { formatAmount, formatLargeAmount } from '../utils/currency';
 
 type Props = {
   // Router
@@ -44,6 +45,8 @@ export default class List extends PureComponent<Props> {
   getListItems = (asset: any, prices: any) => {
     const { currency, marketCap } = asset;
 
+    const currentPrice = this.getCurrentPrice(prices, currency);
+
     return (
       <button
         key={currency}
@@ -61,12 +64,12 @@ export default class List extends PureComponent<Props> {
           </span>
         </div>
         {this.getCurrentDelta(prices, asset)}
-        <div className='list__item__price'>
-          <div>
-            {numeral(marketCap).format('$ 0.00 a')}
+        <div className='list__item__content'>
+          <div className='list__item__price'>
+            {formatAmount(currentPrice)}
           </div>
-          <div>
-            {numeral(this.getCurrentPrice(prices, currency)).format('$0,0.00')}
+          <div className='list__item__marketcap'>
+            {formatLargeAmount(marketCap)}
           </div>
         </div>
       </button>

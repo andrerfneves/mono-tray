@@ -40,8 +40,21 @@ $list-item-height: 3.25rem;
       margin-right: 10px;
     }
 
+    &__content {
+      display: flex;
+      flex-direction: column;
+    }
+
     &__price {
       font-weight: 700;
+      font-size: 17px;
+      color: $icon-color;
+      transition: $transition;
+      text-align: right;
+    }
+
+     &__marketcap {
+      padding-top: 0.25rem;
       font-size: 13px;
       color: $icon-color;
       transition: $transition;
