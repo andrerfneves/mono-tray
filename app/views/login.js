@@ -3,6 +3,14 @@
 import React, { PureComponent } from 'react';
 
 const blockstack = require('blockstack');
+const REGISTER = 'register';
+const LOGIN = 'login';
+
+type Props = {
+  // Actions
+  createUser: Function,
+  signIn: Function,
+};
 
 type State = {
   isSignedIn: any,

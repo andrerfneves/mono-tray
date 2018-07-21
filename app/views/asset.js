@@ -8,6 +8,7 @@ import type { LoadingType } from '../types/loading';
 import type { AssetType } from '../types/asset';
 import { getAssetImage } from '../utils/images';
 import { formatAmount, formatLargeAmount } from '../utils/currency';
+// import { getAssetImage } from '../utils/images';
 
 type Props = {
   // Router
