@@ -1,88 +1,52 @@
 // @flow
 
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent } from 'react';
 
-const REGISTER = 'register';
-const LOGIN = 'login';
-
-type Props = {
-  // Actions
-  createUser: Function,
-  signIn: Function,
-};
+const blockstack = require('blockstack');
 
 type State = {
-  type: string,
-  email: string,
-  password: string,
+  isSignedIn: any,
+  person: any,
 }
 
-export default class LoginView extends PureComponent<Props, State> {
-  state = {
-    type: LOGIN,
-    email: '',
-    password: '',
-  };
+export default class LoginView extends PureComponent<{}, State> {
+  constructor() {
+    super();
 
-  toggleLoginState = (e: any) => {
-    e.preventDefault();
-    this.setState({ type: LOGIN });
+    const isSignedIn = this.checkSignedInStatus();
+
+    this.state = {
+      isSignedIn,
+      person: isSignedIn && this.loadPerson(),
+    };
   }
 
-  toggleCreateUserState = (e: any) => {
-    e.preventDefault();
-    this.setState({ type: REGISTER });
+  checkSignedInStatus = () => {
+    if (blockstack.isUserSignedIn()) {
+      // showProfile(profile)
+      return true;
+    } else if (blockstack.isSignInPending()) {
+      blockstack.handlePendingSignIn().then((userData) => {
+        window.location = window.location.origin;
+      });
+      return false;
+    }
   }
 
-  renderSubmitButton = () => {
-    const { type, email, password } = this.state;
-    const { createUser, signIn } = this.props;
-    const label = type === REGISTER ? 'Register' : 'Log In';
-    const onClick = (type === REGISTER) ?
-      () => createUser({ email, password }) :
-      () => signIn({ email, password });
-
-    return (
-      <button
-        onClick={onClick}
-        className='login__submit'
-      >
-        {label}
-      </button>
-    );
+  loadPerson =() => {
+    const { profile } = blockstack.loadUserData();
+    return new blockstack.Person(profile);
   }
 
-  renderToggler = () => {
-    const { type } = this.state;
-    const label = type === REGISTER ? 'or Log In' : 'or Create account';
-    const onClick = (type === REGISTER) ?
-      e => this.toggleLoginState(e) :
-      e => this.toggleCreateUserState(e);
-
-    return (
-      <button
-        onClick={onClick}
-        className='login__toggler'
-      >
-        {label}
-      </button>
-    );
+  handleSignIn = (event: Object) => {
+    event.preventDefault();
+    blockstack.redirectToSignIn();
   }
 
-  renderForm = () => (
-    <Fragment>
-      <input
-        className='login__input'
-        placeholder='Email Address'
-        type='text'
-      />
-      <input
-        className='login__input'
-        placeholder='Password'
-        type='password'
-      />
-    </Fragment>
-  );
+  handleSignOut = (event: Object) => {
+    event.preventDefault();
+    blockstack.signUserOut(window.location.href);
+  }
 
   render() {
     return (
@@ -92,9 +56,19 @@ export default class LoginView extends PureComponent<Props, State> {
           mono tray
         </div>
         <form className='login__form'>
-          {this.renderForm()}
-          {this.renderSubmitButton()}
-          {this.renderToggler()}
+          <header className='App-header'>
+            <h1 className='App-title'>Blockstack Create React App</h1>
+          </header>
+          <p style={{ display: this.state.isSignedIn ? 'none' : 'block' }}>
+            <button onClick={this.handleSignIn}>
+              Sign-in with Blockstack
+            </button>
+          </p>
+          <p style={{ display: !this.state.isSignedIn ? 'none' : 'block' }}>
+            <button onClick={this.handleSignOut}>
+              Sign-out
+            </button>
+          </p>
         </form>
         <div className='login__footer' />
       </div>
