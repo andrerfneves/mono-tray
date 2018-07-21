@@ -5,7 +5,6 @@ import AllMarketsView from '../views/all-markets';
 import { fetchDashboard } from '../actions/dashboard';
 import { fetchPrices } from '../actions/prices';
 import type { AppState } from '../types/app-state';
-import type { Dispatch } from '../types/redux';
 
 const mapStateToProps = (state: AppState) => ({
   dashboard: state.dashboard,
@@ -13,7 +12,7 @@ const mapStateToProps = (state: AppState) => ({
   loading: state.loading,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
+const mapDispatchToProps = (dispatch: Function) => ({
   fetchDashboard: () => dispatch(fetchDashboard()),
   fetchPrices: () => dispatch(fetchPrices()),
 });

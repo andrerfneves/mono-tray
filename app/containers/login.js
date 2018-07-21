@@ -1,16 +1,17 @@
 // @flow
 
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import LoginView from '../views/login';
-import { createUser, signIn } from '../actions/accounts';
-import type { Dispatch } from '../types/redux';
+import { login } from '../actions/login';
+import { signUp } from '../actions/signup';
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  createUser: () => dispatch(createUser()),
-  signIn: () => dispatch(signIn()),
+const mapDispatchToProps = (dispatch: Function) => ({
+  login: (userObj: Object) => dispatch(login(userObj)),
+  signUp: (userObj: Object) => dispatch(signUp(userObj)),
 });
 
-export default connect(
+export default withRouter(connect(
   null,
   mapDispatchToProps,
-)(LoginView);
+)(LoginView));

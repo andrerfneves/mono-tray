@@ -17,7 +17,4 @@ import SettingsView from '../views/settings';
 //   cancelUpdateTodo: id => dispatch(cancelUpdateTodo(id)),
 // });
 
-export default connect(null, null,
-  // mapStateToProps,
-  // mapDispatchToProps,
-)(SettingsView);
+export default connect(null, null)(SettingsView);
