@@ -6,12 +6,13 @@ const REGISTER = 'register';
 const LOGIN = 'login';
 
 type Props = {
-  createUser: Function,
-  signIn: Function,
+  signUp: Function,
+  login: Function,
 };
 
 type State = {
   type: string,
+  name: string,
   email: string,
   password: string,
 }
@@ -19,31 +20,56 @@ type State = {
 export default class LoginView extends PureComponent<Props, State> {
   state = {
     type: LOGIN,
+    name: '',
     email: '',
     password: '',
   };
 
   toggleLoginState = (e: any) => {
     e.preventDefault();
-    this.setState({ type: LOGIN });
+    this.setState(() => ({ type: LOGIN }));
   }
 
   toggleCreateUserState = (e: any) => {
     e.preventDefault();
-    this.setState({ type: REGISTER });
+    this.setState(() => ({ type: REGISTER }));
+  }
+
+  handleInputChange = (e: Object, property: string) => {
+    const { target: { value } } = e;
+    this.setState(() => ({ [`${property}`]: value }));
+  }
+
+  handleSubmitButton = (e: Object) => {
+    const {
+      type,
+      name,
+      email,
+      password,
+    } = this.state;
+    const { signUp, login } = this.props;
+
+    e.preventDefault();
+    if (type === REGISTER) {
+      signUp({ name, email, password });
+    } else {
+      login({ password, email });
+    }
+
+    this.setState(() => ({
+      name: '',
+      email: '',
+      password: '',
+    }));
   }
 
   renderSubmitButton = () => {
-    const { type, email, password } = this.state;
-    const { createUser, signIn } = this.props;
+    const { type } = this.state;
     const label = type === REGISTER ? 'Register' : 'Log In';
-    const onClick = (type === REGISTER) ?
-      () => createUser({ email, password }) :
-      () => signIn({ email, password });
 
     return (
       <button
-        onClick={onClick}
+        onClick={this.handleSubmitButton}
         className='login__submit'
       >
         {label}
@@ -55,8 +81,8 @@ export default class LoginView extends PureComponent<Props, State> {
     const { type } = this.state;
     const label = type === REGISTER ? 'or Log In' : 'or Create account';
     const onClick = (type === REGISTER) ?
-      e => this.toggleLoginState(e) :
-      e => this.toggleCreateUserState(e);
+      (e: Object) => this.toggleLoginState(e) :
+      (e: Object) => this.toggleCreateUserState(e);
 
     return (
       <button
@@ -68,20 +94,34 @@ export default class LoginView extends PureComponent<Props, State> {
     );
   }
 
-  renderForm = () => (
-    <Fragment>
-      <input
-        className='login__input'
-        placeholder='Email Address'
-        type='text'
-      />
-      <input
-        className='login__input'
-        placeholder='Password'
-        type='password'
-      />
-    </Fragment>
-  );
+  renderForm = () => {
+    const { type } = this.state;
+
+    return (
+      <Fragment>
+        {(type === LOGIN) ? null : (
+          <input
+            className='login__input'
+            placeholder='Name'
+            type='text'
+            onChange={(e: Object) => this.handleInputChange(e, 'name')}
+          />
+        )}
+        <input
+          className='login__input'
+          placeholder='Email Address'
+          type='text'
+          onChange={(e: Object) => this.handleInputChange(e, 'email')}
+        />
+        <input
+          className='login__input'
+          placeholder='Password'
+          type='password'
+          onChange={(e: Object) => this.handleInputChange(e, 'password')}
+        />
+      </Fragment>
+    );
+  }
 
   render() {
     return (

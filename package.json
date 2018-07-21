@@ -1,9 +1,9 @@
 {
-  "name": "crypto-bar",
-  "version": "0.4.0",
+  "name": "mono-tray",
+  "version": "0.2.0",
   "main": "index.js",
-  "title": "Crypto Bar",
-  "description": "A menu bar application that updates cryptocurrencies prices in real-time",
+  "title": "Mono Tray",
+  "description": "Mono Tray Electron Application",
   "author": {
     "name": "André Neves",
     "email": "andrerfneves@protonmail.com",
