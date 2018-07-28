@@ -15,8 +15,7 @@ export default class Spinner extends PureComponent<Props> {
   render() {
     const { isFullBleed } = this.props;
 
-    const className = cx({
-      spinner: true,
+    const className = cx('spinner', {
       'spinner--full': isFullBleed,
     });
 

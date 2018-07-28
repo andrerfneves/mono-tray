@@ -7,7 +7,7 @@ type Props = {
   fetchDashboard: Function,
   fetchPrices: Function,
   dashboard: Array<*>,
-  prices: Array<*>,
+  prices: Object,
   loading: Object,
 }
 

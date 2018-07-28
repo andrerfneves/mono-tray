@@ -1,27 +1,29 @@
+// @flow
+
 import {
   app,
   BrowserWindow,
-  ipcMain,
-  Menu,
+  // ipcMain,
+  // Menu,
   powerMonitor,
-  protocol,
+  // protocol,
   Tray,
 } from 'electron';
 import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 import path from 'path';
-import Config from './config.json';
-import Raven from 'raven';
+// import Raven from 'raven';
 import Positioner from 'electron-positioner';
 import Store from 'electron-store';
 import open from 'open';
+import Config from './config.json';
 import { registerDebugShortcut } from './utils/debug-shortcut';
 import { loadAnalytics, checkHeartbeat } from './utils/analytics';
 
 const store = new Store();
-let mainWindow;
+let mainWindow: Object;
 let updateAvailable = false;
-let tray = null;
+let tray: Object = {};
 
 //-------------------------------------------------------------------
 // Logging
@@ -92,16 +94,16 @@ function createWindow() {
   // -------------
   // Miscellaneous
   // -------------
-  registerDebugShortcut();
-  loadAnalytics(app);
-  checkHeartbeat(app, updateAvailable, autoUpdater);
+  registerDebugShortcut(app, mainWindow);
+  loadAnalytics(app, log);
+  checkHeartbeat(app, updateAvailable, autoUpdater, log);
 
   // --------------------------
   // Init & Positioning Methods
   // --------------------------
   tray.setToolTip('Crypto Bar');
   // mainWindow.loadURL(`file://${__dirname}/dist/index.html`);
-  mainWindow.loadURL('http://localhost:8080/');
+  mainWindow.loadURL('http://localhost:8081/');
   const positioner = new Positioner(mainWindow);
   let bounds = tray.getBounds();
   positioner.move('trayCenter', bounds);
@@ -125,12 +127,18 @@ function createWindow() {
   mainWindow.on('blur', () => mainWindow.hide());
   mainWindow.on('show', () => tray.setHighlightMode('always'));
   mainWindow.on('hide', () => tray.setHighlightMode('never'));
-  mainWindow.on('closed', () => mainWindow = null);
+  // $FlowFixMe
+  mainWindow.on('closed', () => { mainWindow = null; });
 
   tray.on('click', () => {
     bounds = tray.getBounds();
     positioner.move('trayCenter', bounds);
-    mainWindow.isVisible() ? mainWindow.hide() : mainWindow.show();
+
+    if (mainWindow.isVisible()) {
+      mainWindow.hide();
+    } else {
+      mainWindow.show();
+    }
   });
 
   // ----------------

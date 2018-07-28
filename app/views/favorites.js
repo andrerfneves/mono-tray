@@ -6,10 +6,8 @@ import List from '../components/list';
 const ASSETS = [
   { ticker: 'BTC' },
   { ticker: 'ICX' },
-  { ticker: 'ETC' },
   { ticker: 'ZEC' },
-  { ticker: 'QSP' },
-  { ticker: 'SUMO' },
+  { ticker: 'ADA' },
   { ticker: 'VEN' },
 ];
 
@@ -17,7 +15,7 @@ type Props = {
   fetchDashboard: Function,
   fetchPrices: Function,
   dashboard: Array<*>,
-  prices: Array<*>,
+  prices: Object,
   loading: Object,
 }
 

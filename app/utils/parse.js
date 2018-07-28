@@ -1,5 +1,6 @@
+// @flow
 
-export const parseDashboardData = array => array.map((asset) => {
+export const parseDashboardData = (array: Array<*>) => array.map((asset) => {
   const { close, availableSupply } = asset;
 
   if (!availableSupply || !close) {
@@ -16,7 +17,7 @@ export const parseDashboardData = array => array.map((asset) => {
 }).sort((assetA, assetB) => assetA.marketCap - assetB.marketCap)
   .reverse();
 
-export const parsePricesData = (array) => {
+export const parsePricesData = (array: Array<*>) => {
   const prices = {};
 
   array.forEach((asset) => {

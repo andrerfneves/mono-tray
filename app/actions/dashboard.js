@@ -30,6 +30,7 @@ export const fetchDashboard = () => (dispatch: Function) => {
 
   return getDashboard()
     .then(result => result.json())
+    // $FlowFixMe
     .then(json => parseDashboardData(json))
     .then(data => dispatch(fetchDashboardSuccess(data)))
     .then(() => dispatch(toggleLoading({ status: false })))

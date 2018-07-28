@@ -1,3 +1,5 @@
+// @flow
+
 import Analytics from 'electron-google-analytics';
 import { machineIdSync } from 'node-machine-id';
 
@@ -14,19 +16,24 @@ try {
   clientId = 'no-machineid-detected';
 }
 
-const getAnalyticsEvent = (app) => ({
+const getAnalyticsEvent = (app: Object) => ({
   evLabel: `version ${app.getVersion()}`,
   clientID: clientId,
 });
 
-export const loadAnalytics = (app) => analytics.event(
+export const loadAnalytics = (app: Object, log: Object) => analytics.event(
   APP,
   APP_LOAD_EVENT,
   getAnalyticsEvent(app),
-).then((res) => log.info(res))
- .catch((err) => log.error(err));
+).then(res => log.info(res))
+  .catch(err => log.error(err));
 
-export const checkHeartbeat = (app, updateAvailable, autoUpdater) => {
+export const checkHeartbeat = (
+  app: Object,
+  updateAvailable: boolean,
+  autoUpdater: Object,
+  log: Object,
+) => {
   setInterval(() => {
     if (!updateAvailable) autoUpdater.checkForUpdatesAndNotify();
 
@@ -34,7 +41,7 @@ export const checkHeartbeat = (app, updateAvailable, autoUpdater) => {
       APP,
       HEARTBEAT_EVENT,
       getAnalyticsEvent(app),
-    ).then((res) => log.info(res))
-     .catch((err) => log.error(err));
+    ).then(res => log.info(res))
+      .catch(err => log.error(err));
   }, HEARTBEAT_INTERVAL);
-}
+};

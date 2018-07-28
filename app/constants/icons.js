@@ -1,3 +1,5 @@
+// @flow
+
 import $pacImage from '../assets/icons/$pac.png';
 import abtImage from '../assets/icons/abt.png';
 import actImage from '../assets/icons/act.png';

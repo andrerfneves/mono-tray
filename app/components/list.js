@@ -1,71 +1,87 @@
 // @flow
 
-import React from 'react';
+import React, { PureComponent } from 'react';
 import numeral from 'numeral';
 import cx from 'classnames';
-import { getAssetImage } from '../utils/images';
 import Spinner from './spinner';
+import { getAssetImage } from '../utils/images';
+import { getAssetDelta } from '../utils/delta';
 
 type Props = {
   assets: Array<*>,
-  prices: Array<*>,
+  prices: Object,
   loading: Object,
 }
 
-const getCurrentPrice = (prices, currency) => prices[currency];
-const getCurrentDelta = (prices, asset) => {
-  const openPrice = asset.dayOpen || 0;
-  const currentPrice = prices[asset.currency] || 0;
-  const delta = (currentPrice / openPrice) - 1;
-  const isNegative = delta < 0;
-  const sign = isNegative ? '-' : '+';
-  const value = isNegative ? delta.toString().split('-')[1] : delta;
-  const classnames = cx({
-    list__item__delta: true,
-    'list__item__delta--down': delta < 0,
-    'list__item__delta--up': delta > 0,
-  });
+export default class extends PureComponent<Props> {
+  getCurrentMarketCap = (marketCap: number) => numeral(marketCap).format('$ 0.00 a');
+  getCurrentPrice = (currency: string) => {
+    const { prices } = this.props;
+    return numeral(prices[currency]).format('$0,0.00');
+  };
 
-  return (
-    <div className={classnames}>
-      {sign}{numeral(Number(value)).format('0.00%')}
-    </div>
-  );
-};
+  renderCurrentDelta = (asset: Object) => {
+    const { prices } = this.props;
+    const { delta, sign, value } = getAssetDelta(asset, prices);
 
-const getListItems = (asset, prices) => (
-  <li
-    key={asset.currency}
-    className='list__item'
-  >
-    <div className='list__item__info'>
-      <img
-        src={getAssetImage(asset.currency)}
-        alt={`${asset.currency}`}
-        className='list__item__image'
-      />
-      <span className='list__item__name'>
-        {asset.currency}
-      </span>
-    </div>
-    {getCurrentDelta(prices, asset)}
-    <div className='list__item__price'>
-      <div>
-        {numeral(asset.marketCap).format('$ 0.00 a')}
+    const classnames = cx({
+      'list__item-delta': true,
+      'list__item-delta--down': delta < 0,
+      'list__item-delta--up': delta > 0,
+    });
+
+    return (
+      <div className={classnames}>
+        {sign}{value}
       </div>
-      <div>
-        {numeral(getCurrentPrice(prices, asset.currency)).format('$0,0.00')}
-      </div>
-    </div>
-  </li>
-);
+    );
+  };
 
-export default (props: Props) => (
-  <ul className='list'>
-    {
-      !props.loading.status ?
-        props.assets.map(asset => getListItems(asset, props.prices)) :
-        <Spinner isFullBleed />
-    }
-  </ul>
-);
+  renderListItems = (asset: Object) => {
+    const { currency, marketCap } = asset;
+
+    const assetName = `${currency}`;
+    const assetImageSrc = getAssetImage(currency);
+    const assetMarketCap = this.getCurrentMarketCap(marketCap);
+    const assetPrice = this.getCurrentPrice(currency);
+
+    return (
+      <li
+        key={currency}
+        className='list__item'
+      >
+        <div className='list__item-content'>
+          <img
+            src={assetImageSrc}
+            alt={assetName}
+            className='list__item-image'
+          />
+          <span className='list__item-name'>
+            {assetName}
+          </span>
+        </div>
+        {this.renderCurrentDelta(asset)}
+        <div className='list__item-info'>
+          <div className='list__item-price'>
+            {assetPrice}
+          </div>
+          <div className='list__item-marketcap'>
+            {assetMarketCap}
+          </div>
+        </div>
+      </li>
+    );
+  };
+
+  render() {
+    const { assets, loading: { status: loadingStatus } } = this.props;
+    return (
+      <ul className='list'>
+        {!loadingStatus ?
+          assets.map(asset => this.renderListItems(asset)) :
+          <Spinner isFullBleed />
+        }
+      </ul>
+    );
+  }
+}

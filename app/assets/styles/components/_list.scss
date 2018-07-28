@@ -23,59 +23,71 @@ $list-item-height: 3.25rem;
       border-bottom: none;
     }
 
-    &__info {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-    }
-
-    &__name {
-      font-size: 14px;
-    }
-
-    &__image {
-      height: 30px;
-      width: 30px;
-      margin-right: 10px;
-    }
-
-    &__price {
-      font-weight: 700;
-      font-size: 13px;
-      color: $icon-color;
-      transition: $transition;
-      text-align: right;
-    }
-
-    &__delta {
-      position: absolute;
-      top: calc((#{$list-item-height} / 2) - 7px);
-      left: calc(50% - 20px);
-      font-size: 12px;
-      font-weight: 700;
-      text-align: right;
-
-      &--up {
-        opacity: 0.75;
-        color: $brand-success;
-      }
-
-      &--down {
-        opacity: 0.7;
-        color: $brand-error;
-      }
-    }
-
     &:hover {
       background-color: #f5f5f5;
 
-      .list__item__price {
+      .list__item-price,
+      .list__item-marketcap {
         color: $brand-dark;
       }
 
-      .list__item__delta {
+      .list__item-delta {
         opacity: 1;
       }
+    }
+  }
+
+  &__item-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    transition: $transition;
+  }
+
+  &__item-name {
+    font-size: 14px;
+  }
+
+  &__item-image {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+  }
+
+  &__item-info {
+    font-weight: 700;
+    font-size: 13px;
+    color: $icon-color;
+    transition: $transition;
+    text-align: right;
+  }
+
+  &__item-price {
+    font-size: 16px;
+    transition: $transition;
+  }
+
+  &__item-marketcap {
+    transition: $transition;
+
+  }
+
+  &__item-delta {
+    position: absolute;
+    top: calc((#{$list-item-height} / 2) - 7px);
+    left: calc(50% - 20px);
+    font-size: 12px;
+    font-weight: 700;
+    text-align: right;
+
+    &--up {
+      opacity: 0.75;
+      color: $brand-success;
+    }
+
+    &--down {
+      opacity: 0.7;
+      color: $brand-error;
     }
   }
 }
