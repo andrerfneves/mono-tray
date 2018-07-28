@@ -63,12 +63,14 @@ $list-item-height: 3.25rem;
   }
 
   &__item-price {
-    font-size: 16px;
+    font-size: 17px;
     transition: $transition;
   }
 
   &__item-marketcap {
     transition: $transition;
+    padding-top: 5px;
+    font-weight: 400;
 
   }
 
@@ -76,7 +78,7 @@ $list-item-height: 3.25rem;
     position: absolute;
     top: calc((#{$list-item-height} / 2) - 7px);
     left: calc(50% - 20px);
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 700;
     text-align: right;
 

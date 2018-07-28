@@ -3,4 +3,8 @@
 import { connect } from 'react-redux';
 import SettingsView from '../views/settings';
 
-export default connect(null, null)(SettingsView);
+const mapStateToProps = (state: Object) => ({
+  user: state.user,
+});
+
+export default connect(mapStateToProps)(SettingsView);

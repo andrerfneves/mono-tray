@@ -14,7 +14,7 @@ const store = configureStore({});
 
 // Access Token
 const token = localGetToken() || '';
-const isValidToken = token && token !== 'undefined';
+const isValidToken = !!token;
 
 if (isValidToken) {
   setJWTTokenStorage(token);

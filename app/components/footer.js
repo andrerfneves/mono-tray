@@ -3,8 +3,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import SyncIcon from 'react-icons/lib/io/android-sync';
-import MenuIcon from 'react-icons/lib/io/android-menu';
-import { SETTINGS_ROUTE } from '../constants/routes';
+import AddIcon from 'react-icons/lib/io/android-add';
+import { ADD_FAVORITES_ROUTE } from '../constants/routes';
 
 type Props = {
   dataRefresh: Function,
@@ -20,9 +20,9 @@ export default (props: Props) => (
     </button>
     <Link
       className='footer__icon'
-      to={SETTINGS_ROUTE}
+      to={ADD_FAVORITES_ROUTE}
     >
-      <MenuIcon />
+      <AddIcon />
     </Link>
   </div>
 );

@@ -15,15 +15,6 @@
     margin: 0 0 2rem 0;
   }
 
-  &__input {
-    @include reset-text-input;
-    border: 1px solid $input-border;
-    padding: 14px 10px;
-    margin: 0 0 10px 0;
-    border-radius: 3px;
-    min-width: 300px;
-  }
-
   &__form {
     display: flex;
     flex-direction: column;

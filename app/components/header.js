@@ -2,24 +2,27 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import AddIcon from 'react-icons/lib/io/android-add';
-import SearchIcon from 'react-icons/lib/io/android-search';
-import { ADD_FAVORITES_ROUTE, LOGIN_ROUTE } from '../constants/routes';
+import HomeIcon from 'react-icons/lib/io/android-home';
+import MenuIcon from 'react-icons/lib/io/android-menu';
+import {
+  ALL_MARKETS_ROUTE,
+  SETTINGS_ROUTE,
+} from '../constants/routes';
 
 export default () => (
   <div className='header'>
     <Link
       className='header__icon'
-      to={ADD_FAVORITES_ROUTE}
+      to={ALL_MARKETS_ROUTE}
     >
-      <AddIcon />
+      <HomeIcon />
     </Link>
     <div className='header__title'>mono tray</div>
     <Link
       className='header__icon'
-      to={LOGIN_ROUTE}
+      to={SETTINGS_ROUTE}
     >
-      <SearchIcon />
+      <MenuIcon />
     </Link>
   </div>
 );

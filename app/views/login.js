@@ -1,6 +1,7 @@
 // @flow
 
 import React, { PureComponent, Fragment } from 'react';
+import Input from '../components/input';
 
 const REGISTER = 'register';
 const LOGIN = 'login';
@@ -100,21 +101,18 @@ export default class LoginView extends PureComponent<Props, State> {
     return (
       <Fragment>
         {(type === LOGIN) ? null : (
-          <input
-            className='login__input'
+          <Input
             placeholder='Name'
             type='text'
             onChange={(e: Object) => this.handleInputChange(e, 'name')}
           />
         )}
-        <input
-          className='login__input'
+        <Input
           placeholder='Email Address'
           type='text'
           onChange={(e: Object) => this.handleInputChange(e, 'email')}
         />
-        <input
-          className='login__input'
+        <Input
           placeholder='Password'
           type='password'
           onChange={(e: Object) => this.handleInputChange(e, 'password')}
@@ -127,9 +125,6 @@ export default class LoginView extends PureComponent<Props, State> {
     return (
       <div className='login'>
         <div className='login__header' />
-        <div className='login__logo'>
-          mono tray
-        </div>
         <form className='login__form'>
           {this.renderForm()}
           {this.renderSubmitButton()}

@@ -1,7 +1,7 @@
 // @flow
 
 import { push } from 'react-router-redux';
-import { HOME_ROUTE } from '../constants/routes';
+import { ALL_FAVORITES_ROUTE } from '../constants/routes';
 import {
   LOGIN_ERROR,
   LOGIN_REQUEST,
@@ -42,7 +42,7 @@ export const login = (user: Object) => (dispatch: Function) => {
       setJWTTokenStorage(data.token);
 
       dispatch(loginSuccess(data.data));
-      dispatch(push(HOME_ROUTE));
+      dispatch(push(ALL_FAVORITES_ROUTE));
     })
     .catch(err => dispatch(loginError(err)));
 };

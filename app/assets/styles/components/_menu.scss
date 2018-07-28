@@ -21,6 +21,11 @@
     .menu__option {
       font-size: 12px;
       font-weight: 700;
+      transition: $transition;
+
+      &:hover {
+        color: $brand-dark;
+      }
     }
 
     &.menu__option--active {

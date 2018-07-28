@@ -1,6 +1,7 @@
 // @flow
 
 import React from 'react';
+import Input from '../components/input';
 
 export default () => (
   <div className='add-favorite'>
@@ -11,7 +12,7 @@ export default () => (
       Search below to keep closer track of your favorite assets
     </div>
     <div className='add-favorite__input'>
-      <input type='text' />
+      <Input type='text' />
     </div>
   </div>
 );

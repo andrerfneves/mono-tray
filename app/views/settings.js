@@ -1,17 +1,33 @@
 // @flow
 
 import React from 'react';
+import TextLabel from '../components/text-label';
 
-export default () => (
-  <div className='settings'>
-    <div className='settings__header'>
-      Settings
+type Props = {
+  user: Object
+};
+
+export default (props: Props) => {
+  const { user } = props;
+
+  return (
+    <div className='settings'>
+      <div className='settings__header'>
+        Settings
+      </div>
+      <div className='settings__description'>
+        Manage your user preferences
+      </div>
+      <div className='settings__content'>
+        <TextLabel
+          label='Name'
+          value={user.name}
+        />
+        <TextLabel
+          label='Email'
+          value={user.email}
+        />
+      </div>
     </div>
-    <div className='settings__description'>
-      Search below to keep closer track of your favorite assets
-    </div>
-    <div className='settings__input'>
-      <input type='text' />
-    </div>
-  </div>
-);
+  );
+};

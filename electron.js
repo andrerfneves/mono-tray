@@ -101,9 +101,9 @@ function createWindow() {
   // --------------------------
   // Init & Positioning Methods
   // --------------------------
-  tray.setToolTip('Crypto Bar');
+  tray.setToolTip('Mono Tray');
   // mainWindow.loadURL(`file://${__dirname}/dist/index.html`);
-  mainWindow.loadURL('http://localhost:8081/');
+  mainWindow.loadURL('http://localhost:8080/');
   const positioner = new Positioner(mainWindow);
   let bounds = tray.getBounds();
   positioner.move('trayCenter', bounds);
