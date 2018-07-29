@@ -31,6 +31,7 @@
     "better-react-spinkit": "^2.0.4",
     "classnames": "^2.2.5",
     "clay-base-sdk": "0.0.52",
+    "flow-coverage-report": "^0.5.0",
     "format-currency": "^1.0.0",
     "fs": "0.0.1-security",
     "history": "^4.7.2",
@@ -56,6 +57,7 @@
     "uglifyjs-webpack-plugin": "^1.2.7",
     "underscore": "^1.8.3",
     "uuid": "^3.2.1",
+    "webpack-bundle-analyzer": "^2.13.1",
     "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
