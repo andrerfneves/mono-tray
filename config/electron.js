@@ -17,8 +17,8 @@ import Positioner from 'electron-positioner';
 import Store from 'electron-store';
 import open from 'open';
 import Config from './config.json';
-import { registerDebugShortcut } from './utils/debug-shortcut';
-import { loadAnalytics, checkHeartbeat } from './utils/analytics';
+import { registerDebugShortcut } from '../utils/debug-shortcut';
+import { loadAnalytics, checkHeartbeat } from '../utils/analytics';
 
 const store = new Store();
 let mainWindow: Object;
