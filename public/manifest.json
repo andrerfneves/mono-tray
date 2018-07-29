@@ -1,6 +1,6 @@
 {
-  "short_name": "React",
-  "name": "React Redux Starter",
+  "short_name": "Mono",
+  "name": "Mono Tray",
   "icons": [
     {
     "src": "favicon.ico",
