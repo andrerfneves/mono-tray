@@ -17,9 +17,16 @@
     "flow:precommit": "glow",
     "electron:dev": "electron -r babel-register .",
     "electron:build": "build",
-    "electron:publish": "yarn react:build && yarn electron:build"
+    "electron:publish": "yarn react:build && yarn electron:build",
+    "bundle:profile:prepare": "rm -rf ./webpack-stats/stats.json && touch ./webpack-stats/stats.json",
+    "bundle:profile": "webpack --profile --json > webpack-stats/stats.json",
+    "bundle:analyze": "webpack-bundle-analyzer webpack-stats/stats.json",
+    "analyze": "yarn bundle:profile:prepare && yarn bundle:profile && yarn bundle:analyze",
+    "flow:coverage": "flow-coverage-report -t html -i 'app/**/*.js' -x 'build/*.js' --threshold 70",
+    "flow:report": "yarn flow:coverage && cd ./flow-coverage && open index.html"
   },
   "dependencies": {
+    "autoprefixer": "^9.0.1",
     "axios": "^0.18.0",
     "better-react-spinkit": "^2.0.4",
     "classnames": "^2.2.5",
@@ -46,6 +53,7 @@
     "redux": "^4.0.0",
     "redux-thunk": "^2.2.0",
     "socket.io-client": "^2.1.0",
+    "uglifyjs-webpack-plugin": "^1.2.7",
     "underscore": "^1.8.3",
     "uuid": "^3.2.1",
     "whatwg-fetch": "^2.0.4"
@@ -98,7 +106,10 @@
     "category": "app",
     "dmg": {
       "contents": [
-        { "x": 110, "y": 150 },
+        {
+          "x": 110,
+          "y": 150
+        },
         {
           "x": 240,
           "y": 150,
