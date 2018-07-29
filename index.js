@@ -1,2 +1,2 @@
-require('babel-register'); // eslint-disable-line
-require('./electron.js');
+require('babel-core/register'); // eslint-disable-line
+require('./config/electron.js');

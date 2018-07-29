@@ -17,8 +17,8 @@ import Positioner from 'electron-positioner';
 import Store from 'electron-store';
 import open from 'open';
 import Config from './config.json';
-import { registerDebugShortcut } from './utils/debug-shortcut';
-import { loadAnalytics, checkHeartbeat } from './utils/analytics';
+import { registerDebugShortcut } from '../utils/debug-shortcut';
+import { loadAnalytics, checkHeartbeat } from '../utils/analytics';
 
 const store = new Store();
 let mainWindow: Object;
@@ -102,8 +102,8 @@ function createWindow() {
   // Init & Positioning Methods
   // --------------------------
   tray.setToolTip('Mono Tray');
-  // mainWindow.loadURL(`file://${__dirname}/dist/index.html`);
-  mainWindow.loadURL('http://localhost:8080/');
+  mainWindow.loadURL(`file://${__dirname}/build/index.html`);
+  // mainWindow.loadURL('http://localhost:8080/');
   const positioner = new Positioner(mainWindow);
   let bounds = tray.getBounds();
   positioner.move('trayCenter', bounds);
