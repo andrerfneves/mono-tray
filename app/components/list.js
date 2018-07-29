@@ -6,11 +6,14 @@ import cx from 'classnames';
 import Spinner from './spinner';
 import { getAssetImage } from '../utils/images';
 import { getAssetDelta } from '../utils/delta';
+import { SINGLE_ASSET_ROUTE } from '../constants/routes';
 
 type Props = {
   assets: Array<*>,
   prices: Object,
   loading: Object,
+  isNumbered: boolean,
+  history: Object,
 }
 
 export default class extends PureComponent<Props> {
@@ -19,6 +22,13 @@ export default class extends PureComponent<Props> {
     const { prices } = this.props;
     return numeral(prices[currency]).format('$0,0.00');
   };
+
+  handleClickItem = (currency: string) => {
+    const { history } = this.props;
+
+    const currencyFormatted = currency.toUpperCase();
+    return history.push(`${SINGLE_ASSET_ROUTE}/${currencyFormatted}`);
+  }
 
   renderCurrentDelta = (asset: Object) => {
     const { prices } = this.props;
@@ -37,7 +47,8 @@ export default class extends PureComponent<Props> {
     );
   };
 
-  renderListItems = (asset: Object) => {
+  renderListItems = (asset: Object, assetIndex: number) => {
+    const { isNumbered } = this.props;
     const { currency, marketCap } = asset;
 
     const assetName = `${currency}`;
@@ -46,11 +57,21 @@ export default class extends PureComponent<Props> {
     const assetPrice = this.getCurrentPrice(currency);
 
     return (
+      // eslint-disable-next-line
       <li
         key={currency}
         className='list__item'
+        onClick={() => this.handleClickItem(currency)}
       >
         <div className='list__item-content'>
+          {!isNumbered ?
+            null :
+            (
+              <div className='list__item-index'>
+                {assetIndex}
+              </div>
+            )
+          }
           <img
             src={assetImageSrc}
             alt={assetName}
@@ -78,7 +99,7 @@ export default class extends PureComponent<Props> {
     return (
       <ul className='list'>
         {!loadingStatus ?
-          assets.map(asset => this.renderListItems(asset)) :
+          assets.map((asset, index) => this.renderListItems(asset, index + 1)) :
           <Spinner isFullBleed />
         }
       </ul>

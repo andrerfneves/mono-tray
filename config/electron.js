@@ -75,8 +75,8 @@ function createWindow() {
   // App Window
   // ----------
   mainWindow = new BrowserWindow({
-    width: 340,
-    height: 435,
+    width: 370,
+    height: 485,
     transparent: true,
     frame: false,
     resizable: true,
@@ -88,7 +88,7 @@ function createWindow() {
 
   mainWindow.setVisibleOnAllWorkspaces(true);
   app.dock.hide();
-  tray = new Tray(path.join(__dirname, 'public', 'tray.png'));
+  tray = new Tray(path.join(__dirname, '../public', 'tray.png'));
   // tray.setTitle('Fetching...');
 
   // -------------
@@ -102,8 +102,8 @@ function createWindow() {
   // Init & Positioning Methods
   // --------------------------
   tray.setToolTip('Mono Tray');
-  mainWindow.loadURL(`file://${__dirname}/build/index.html`);
-  // mainWindow.loadURL('http://localhost:8080/');
+  // mainWindow.loadURL(`file://${__dirname}/build/index.html`);
+  mainWindow.loadURL('http://localhost:8080/');
   const positioner = new Positioner(mainWindow);
   let bounds = tray.getBounds();
   positioner.move('trayCenter', bounds);

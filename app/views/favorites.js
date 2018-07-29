@@ -17,6 +17,7 @@ type Props = {
   dashboard: Array<*>,
   prices: Object,
   loading: Object,
+  history: Object,
 }
 
 export default class FavoritesView extends PureComponent<Props> {
@@ -28,7 +29,12 @@ export default class FavoritesView extends PureComponent<Props> {
   }
 
   render() {
-    const { dashboard, prices, loading } = this.props;
+    const {
+      dashboard,
+      prices,
+      loading,
+      history,
+    } = this.props;
     const favoriteItems = [];
 
     ASSETS.forEach((asset) => {
@@ -44,6 +50,8 @@ export default class FavoritesView extends PureComponent<Props> {
           assets={favoriteItems}
           prices={prices}
           loading={loading}
+          isNumbered={false}
+          history={history}
         />
       </div>
     );

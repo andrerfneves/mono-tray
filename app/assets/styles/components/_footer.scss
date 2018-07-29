@@ -19,6 +19,7 @@
     font-size: 1.3rem;
     color: $icon-color;
     transition: $transition;
+    cursor: default;
 
     &:hover {
       color: $brand-dark;

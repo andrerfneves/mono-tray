@@ -2,7 +2,14 @@
 
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { ALL_MARKETS_ROUTE, ALL_FAVORITES_ROUTE, LOGIN_ROUTE } from '../constants/routes';
+import {
+  ALL_MARKETS_ROUTE,
+  ALL_FAVORITES_ROUTE,
+  LOGIN_ROUTE,
+  ADD_FAVORITES_ROUTE,
+  SETTINGS_ROUTE,
+  SINGLE_ASSET_ROUTE,
+} from '../constants/routes';
 
 type Props = {
   location: Object,
@@ -10,7 +17,12 @@ type Props = {
 
 export default (props: Props) => {
   const { location: { pathname } } = props;
-  if (pathname === LOGIN_ROUTE) return null;
+  if (
+    pathname === LOGIN_ROUTE ||
+    pathname === ADD_FAVORITES_ROUTE ||
+    pathname === SETTINGS_ROUTE ||
+    pathname.includes(SINGLE_ASSET_ROUTE)
+  ) return null;
 
   return (
     <div className='menu'>

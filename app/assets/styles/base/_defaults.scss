@@ -18,8 +18,11 @@ a {
 }
 
 .mono {
-  width: 100vw;
-  height: 100vh;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
   background: $brand-light;
   -webkit-box-shadow: 10px 10px 105px 0px rgba(212, 212, 212, 1);
   -moz-box-shadow: 10px 10px 105px 0px rgba(212, 212, 212, 1);

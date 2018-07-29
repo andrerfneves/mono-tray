@@ -14,14 +14,17 @@
 
 // Components
 @import 'components/header';
-@import 'components/dashboard';
-@import 'components/add-favorite';
 @import 'components/footer';
 @import 'components/menu';
 @import 'components/list';
-@import 'components/login';
-@import 'components/router';
-@import 'components/settings';
 @import 'components/spinner';
 @import 'components/input';
 @import 'components/text-label';
+
+// Views
+@import 'components/router';
+@import 'components/login';
+@import 'components/single-asset';
+@import 'components/dashboard';
+@import 'components/add-favorite';
+@import 'components/settings';

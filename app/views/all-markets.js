@@ -9,6 +9,7 @@ type Props = {
   dashboard: Array<*>,
   prices: Object,
   loading: Object,
+  history: Object,
 }
 
 export default class AllMarketsView extends Component<Props> {
@@ -20,7 +21,12 @@ export default class AllMarketsView extends Component<Props> {
   }
 
   render() {
-    const { dashboard, prices, loading } = this.props;
+    const {
+      dashboard,
+      prices,
+      loading,
+      history,
+    } = this.props;
 
     return (
       <div className='dashboard' >
@@ -28,6 +34,8 @@ export default class AllMarketsView extends Component<Props> {
           assets={dashboard}
           prices={prices}
           loading={loading}
+          isNumbered
+          history={history}
         />
       </div>
     );

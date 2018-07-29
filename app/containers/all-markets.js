@@ -1,6 +1,7 @@
 // @flow
 
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import AllMarketsView from '../views/all-markets';
 import { fetchDashboard } from '../actions/dashboard';
 import { fetchPrices } from '../actions/prices';
@@ -17,7 +18,7 @@ const mapDispatchToProps = (dispatch: Function) => ({
   fetchPrices: () => dispatch(fetchPrices()),
 });
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(AllMarketsView);
+)(AllMarketsView));

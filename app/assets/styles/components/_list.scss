@@ -27,7 +27,9 @@ $list-item-height: 3.25rem;
       background-color: #f5f5f5;
 
       .list__item-price,
-      .list__item-marketcap {
+      .list__item-marketcap,
+      .list__item-index,
+      .list__item-name {
         color: $brand-dark;
       }
 
@@ -35,6 +37,13 @@ $list-item-height: 3.25rem;
         opacity: 1;
       }
     }
+  }
+
+  &__item-index {
+    font-weight: 700;
+    padding-right: 6px;
+    font-size: 12px;
+    color: $icon-color;
   }
 
   &__item-content {
@@ -45,7 +54,10 @@ $list-item-height: 3.25rem;
   }
 
   &__item-name {
-    font-size: 14px;
+    font-size: 12px;
+    font-weight: 700;
+    color: $icon-color;
+    margin-left: -4px;
   }
 
   &__item-image {

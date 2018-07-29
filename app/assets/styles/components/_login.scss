@@ -28,7 +28,6 @@
     background: #eee;
     padding: 14px 10px;
     margin: 15px 0 0 0;
-    cursor: pointer;
     border: 1px solid #ddd;
     border-radius: 3px;
 
@@ -42,7 +41,6 @@
     @include reset-button;
     padding: 14px 10px;
     margin: 10px 0 0 0;
-    cursor: pointer;
   }
 
   &__header {
