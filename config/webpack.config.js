@@ -3,7 +3,7 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const autoprefixer = require('autoprefixer');
 const path = require('path');
 
-const outputPath = path.resolve(__dirname, '.', 'build');
+const outputPath = path.resolve(__dirname, '../', 'build');
 
 // HTML Plugin
 const htmlPlugin = new HtmlWebPackPlugin({
