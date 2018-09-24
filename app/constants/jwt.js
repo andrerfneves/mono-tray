@@ -1,4 +1,4 @@
 // @flow
 
 // JWT Token
-export const JWT_TOKEN = 'x-access-token';
+export const JWT_TOKEN = 'x-mono-token';

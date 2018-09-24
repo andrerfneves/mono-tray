@@ -1,9 +1,10 @@
 {
   "name": "mono-tray",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "main": "index.js",
   "title": "Mono Tray",
   "description": "Mono Tray Electron Application",
+  "copyright": "Copyright © 2018 André Neves",
   "author": {
     "name": "André Neves",
     "email": "andrerfneves@protonmail.com",
@@ -13,12 +14,13 @@
     "start": "yarn react:dev",
     "react:dev": "webpack-dev-server --config config/webpack.config.js --mode development --open",
     "react:build": "webpack --config config/webpack.config.js --mode production",
+    "react:deploy": "cd build && now && now alias mono-tray.now.sh",
     "lint:precommit": "eslint ./app/",
     "flow:precommit": "glow",
     "electron:dev": "electron -r babel-register .",
-    "electron:build": "build",
     "electron:prepare": "rm -rf dist && mkdir dist",
-    "electron:publish": "yarn electron:prepare && yarn react:build && yarn electron:build",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
     "bundle:profile:prepare": "rm -rf ./webpack-stats/stats.json && touch ./webpack-stats/stats.json",
     "bundle:profile": "webpack --profile --json > webpack-stats/stats.json",
     "bundle:analyze": "webpack-bundle-analyzer webpack-stats/stats.json",
@@ -95,29 +97,20 @@
     "webpack-cli": "^2.0.13",
     "webpack-dev-server": "^3.1.1"
   },
-  "pre-commit": [
-    "flow:precommit"
-  ],
+  "pre-commit": ["flow:precommit"],
   "build": {
-    "appId": "app.mono.tray",
-    "dmg": {
-      "contents": [
-        {
-          "x": 110,
-          "y": 150
-        },
-        {
-          "x": 240,
-          "y": 150,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
+    "appId": "com.mono.tray",
+    "productName": "Mono Tray",
+    "directories": {
+      "buildResources": "build",
+      "output": "dist"
     },
-    "linux": {
+    "mac": {
+      "category": "public.app-category.productivity",
+      "type": "distribution",
       "target": [
-        "AppImage",
-        "deb"
+        "pkg",
+        "dmg"
       ]
     }
   }
