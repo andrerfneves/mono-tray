@@ -1,5 +1,3 @@
-// @flow
-
 export const parseDashboardData = (array: Array<*>) => array.map((asset) => {
   const { close, availableSupply } = asset;
 

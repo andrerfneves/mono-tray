@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { HomeIcon, MenuIcon } from 'react-icons/io';
+import { IoMdHome as HomeIcon, IoMdHome as MenuIcon } from 'react-icons/io';
 import {
   ALL_MARKETS_ROUTE,
   SETTINGS_ROUTE,
