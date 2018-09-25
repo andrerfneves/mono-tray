@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import SyncIcon from 'react-icons/lib/io/android-sync';
-import AddIcon from 'react-icons/lib/io/android-add';
+import { SyncIcon, AddIcon } from 'react-icons/io';
 import { ADD_FAVORITES_ROUTE } from '../constants/routes';
 
 type Props = {

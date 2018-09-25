@@ -2,8 +2,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import HomeIcon from 'react-icons/lib/io/android-home';
-import MenuIcon from 'react-icons/lib/io/android-menu';
+import { HomeIcon, MenuIcon } from 'react-icons/io';
 import {
   ALL_MARKETS_ROUTE,
   SETTINGS_ROUTE,

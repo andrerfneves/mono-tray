@@ -14,13 +14,9 @@ import { autoUpdater } from 'electron-updater';
 import path from 'path';
 // import Raven from 'raven';
 import Positioner from 'electron-positioner';
-import Store from 'electron-store';
-import open from 'open';
-import Config from './config.json';
 import { registerDebugShortcut } from '../utils/debug-shortcut';
 import { loadAnalytics, checkHeartbeat } from '../utils/analytics';
 
-const store = new Store();
 let mainWindow: Object;
 let updateAvailable = false;
 let tray: Object = {};
@@ -89,7 +85,6 @@ function createWindow() {
   mainWindow.setVisibleOnAllWorkspaces(true);
   app.dock.hide();
   tray = new Tray(path.join(__dirname, '../public', 'tray.png'));
-  // tray.setTitle('Fetching...');
 
   // -------------
   // Miscellaneous
@@ -108,12 +103,6 @@ function createWindow() {
   const positioner = new Positioner(mainWindow);
   let bounds = tray.getBounds();
   positioner.move('trayCenter', bounds);
-
-  // ---------------------
-  // Load User Preferences
-  // ---------------------
-  const userPreferences = store.get('preferences') || Config.defaultPreferences;
-  store.set('preferences', userPreferences);
 
   // ---------------------
   // Handle Sleep / Resume
@@ -145,9 +134,7 @@ function createWindow() {
   // ----------------
   // Renderer Exports
   // ----------------
-  exports.store = store;
   exports.app = app;
-  exports.open = open;
   exports.tray = tray;
 }
 
